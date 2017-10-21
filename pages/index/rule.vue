@@ -1,5 +1,5 @@
 <template>
-  <div class="p-rule">
+  <div :class="['p-rule', {'no-scroll': open}]">
     <img class="w-rule-img" src="~assets/images/rule/theme.png"></img>
     <div class="w-rule-detail">
       <p class="w-rule-item w-rule-one" style="margin-top: 0px;">用户开始游戏后，录制明星信的经典歌曲，可获得一定的评分；邀请三位好友前来帮帮唱，组成完整歌曲即可获得团队分数。</p>
@@ -66,6 +66,9 @@ export default {
 
 
 <style scoped>
+.no-scroll {
+  overflow: hidden !important;
+}
 .p-rule {
   width: 100%;
   height: 100%;

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-personal">
+  <div :class="['p-personal', {'no-scroll': showModel}]">
     <img class="w-theme-show" src="~assets/images/personal/theme.png"></img>
     <div class="w-dick-container">
       <div class="w-dick-progress">
@@ -20,7 +20,7 @@
     </div>
     <div class="w-btn-container">
       <div class="w-btn-item">重新录制</div>
-      <div class="w-btn-item">好友一起唱</div>
+      <div class="w-btn-item" @click="toShareFriend">好友一起唱</div>
     </div>
     <div class="w-users-container">
       <div class="w-users-outline-box w-users-outline-box-left">
@@ -50,28 +50,40 @@
     <div class="w-score-container">
       <div class="w-score-title">排行榜</div>
     </div>
+    <share-model v-model="showModel"></share-model>
   </div>
 </template>
 
 <script>
+import shareModel from '../../components/share-model.vue'
 export default {
   data () {
     return {
-      status: false
+      status: false,
+      showModel: false
     }
   },
   methods: {
+    toShareFriend () {
+      this.showModel = true
+    },
     handleMusicAction () {
       this.status = !this.status
     }
+  },
+  components: {
+    shareModel
   }
 }
 </script>
 
 <style scoped>
+.no-scroll {
+  overflow: hidden !important;
+}
 .p-personal {
   position: relative;
-  min-height: 3000px;
+  height: 100%;
   overflow: auto;
   background-image: url("~assets/images/personal/background.png");
   background-size: cover;
@@ -159,7 +171,6 @@ export default {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background: rgba(123, 2132, 123, 0.6);
 }
 
 .w-action-btn {
