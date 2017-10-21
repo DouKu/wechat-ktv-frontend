@@ -83,6 +83,7 @@ export default {
       this.$refs.preAudio.play()
     },
     startRecord () {
+      this.status = false
       const wx = window.wx
       wx.startRecord()
       setTimeout(() => {
@@ -128,6 +129,7 @@ export default {
           })
           this.finalUrl = _res.data.data.finalUrl
           this.$refs.afterAudio.src = this.finalUrl
+          this.status = true
         }
       })
     }
