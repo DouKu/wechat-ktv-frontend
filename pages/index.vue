@@ -91,6 +91,7 @@ export default {
       }
     } else {
       this.showToAuth = false
+      this.$router.push('/cover')
     }
   }
 }

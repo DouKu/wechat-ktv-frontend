@@ -20,10 +20,10 @@
     </div>
     <div class="w-btn-container">
       <template v-if="status">
-        <div class="w-btn-item">重新录制</div>
+        <div class="w-btn-item" @click="startRecord">重新录制</div>
       </template>
       <template v-else>
-        <div class="w-btn-item">开始录制</div>
+        <div class="w-btn-item" @click="startRecord">开始录制</div>
       </template>
       <div class="w-btn-item" @click="toShareFriend">好友一起唱</div>
     </div>
@@ -65,10 +65,28 @@ export default {
   data () {
     return {
       status: false,
-      showModel: false
+      showModel: false,
+      localId: ''
     }
   },
   methods: {
+    startRecord () {
+      const wx = window.wx
+      wx.startRecord()
+      setTimeout(() => {
+        this.firstRecord = false
+        this.stopRecord()
+      }, 15000)
+    },
+    stopRecord () {
+      const wx = window.wx
+      wx.stopRecord({
+        success: res => {
+          this.localId = res.localId
+          console.log(this.localId)
+        }
+      })
+    },
     toShareFriend () {
       this.showModel = true
     },
