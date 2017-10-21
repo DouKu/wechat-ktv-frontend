@@ -81,7 +81,6 @@ h1 {
   text-align: center;
   font-weight: bold;
   margin: 10px 10px;
-  line-height: 70px;
   font-size: 33px;
   line-height: 80px;
   background-image: url("~assets/images/popup/btn.png");
