@@ -23,7 +23,7 @@ export default {
   height: 100%;
   flex-direction: column;
   align-items: center;
-  background-image: url("~assets/images/background.png");
+  background-image: url("~assets/images/background.jpg");
   background-size: 100% 100%;
   background-attachment: local;
   background-repeat: no-repeat;

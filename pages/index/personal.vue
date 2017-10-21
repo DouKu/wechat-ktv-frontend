@@ -19,7 +19,12 @@
       </div>
     </div>
     <div class="w-btn-container">
-      <div class="w-btn-item">重新录制</div>
+      <template v-if="status">
+        <div class="w-btn-item">重新录制</div>
+      </template>
+      <template v-else>
+        <div class="w-btn-item">开始录制</div>
+      </template>
       <div class="w-btn-item" @click="toShareFriend">好友一起唱</div>
     </div>
     <div class="w-users-container">
@@ -85,7 +90,7 @@ export default {
   position: relative;
   height: 100%;
   overflow: auto;
-  background-image: url("~assets/images/personal/background.png");
+  background-image: url('~assets/images/personal/background.png');
   background-size: 100% 100%;
   background-attachment: local;
   background-position: center center;
