@@ -10,11 +10,13 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      { src: '/js/flexible.min.js' }
+      { src: '/js/flexible.min.js' },
+      { src: 'http://res.wx.qq.com/open/js/jweixin-1.2.0.js' }
     ]
   },
   loading: '~/components/loading.vue',
   build: {
+    vendor: ['axios', 'weixin-js-sdk'],
     ssr: true,
     extractCSS: true,
     cssSourceMap: false,

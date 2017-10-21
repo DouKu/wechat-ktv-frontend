@@ -1,4 +1,0 @@
-test
-aaa
-bbb
-aaa

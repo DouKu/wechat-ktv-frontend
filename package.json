@@ -17,7 +17,8 @@
     "mint-ui": "^2.2.9",
     "nuxt": "^1.0.0-rc3",
     "postcss-px2rem": "^0.3.0",
-    "vuedraggable": "^2.14.1"
+    "vuedraggable": "^2.14.1",
+    "weixin-js-sdk": "^1.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
