@@ -86,9 +86,9 @@ export default {
   height: 100%;
   overflow: auto;
   background-image: url("~assets/images/personal/background.png");
-  background-size: scroll;
   background-size: 100% 100%;
   background-attachment: local;
+  background-position: center center;
   background-repeat: no-repeat;
 }
 .w-theme-show {
