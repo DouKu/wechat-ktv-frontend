@@ -1,7 +1,7 @@
 <template>
   <div class="p-cover">
     <img class="w-show-img" src="~assets/images/cover/main.png"></img>
-    <div class="w-start-btn" @click="changeRouter">开始游戏&nbsp▶</div>
+    <div class="w-start-btn" @click="changeRouter">开始游戏<img src="~assets/images/play.png"></img></div>
   </div>
 </template>
 
@@ -50,6 +50,10 @@ export default {
 }
 .w-start-btn:active {
   transform: scale(1.2);
+}
+.w-start-btn > img {
+  position: relative;
+  top: 20px;
 }
 </style>
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-index-page">
     <router-view></router-view>
   </div>
 </template>
@@ -13,6 +13,9 @@ export default {
 
 <style>
 @import '../assets/style/normal.css';
+.p-index-page {
+  height: 100%;
+}
 </style>
 
 
