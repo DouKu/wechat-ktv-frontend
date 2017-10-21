@@ -1,5 +1,7 @@
 <template>
   <div :class="['p-personal', {'no-scroll': showModel}]">
+    <audio ref="preAudio" :src="currentMusic.url" preload="true" @ended="preAudioEnd"></audio>
+    <audio ref="afterAudio" :src="finalUrl" @ended="afterAudioEnd" preload="true"></audio>
     <img class="w-theme-show" src="~assets/images/personal/theme.png"></img>
     <div class="w-dick-container">
       <div class="w-dick-progress">
@@ -60,16 +62,27 @@
 </template>
 
 <script>
+import axios from 'axios'
+import config from '../config'
 import shareModel from '../../components/share-model.vue'
 export default {
   data () {
     return {
       status: false,
       showModel: false,
-      localId: ''
+      currentMusic: this.$route.query.music,
+      localId: '',
+      finalUrl: ''
     }
   },
   methods: {
+    preAudioEnd () {
+      this.$refs.src = this.finalUrl
+      this.$refs.afterAudio.play()
+    },
+    startPreVoice () {
+      this.$refs.preAudio.play()
+    },
     startRecord () {
       const wx = window.wx
       wx.startRecord()
@@ -83,7 +96,7 @@ export default {
       wx.stopRecord({
         success: res => {
           this.localId = res.localId
-          console.log(this.localId)
+          this.uploadVoice()
         }
       })
     },
@@ -92,6 +105,26 @@ export default {
     },
     handleMusicAction () {
       this.status = !this.status
+    },
+    uploadVoice () {
+      const wx = window.wx
+      wx.uploadVoice({
+        localId: this.localId,
+        isShowProgressTips: 0,
+        success: async (res) => {
+          const serverId = res.serverId // 返回音频的服务器端ID
+          const _res = await axios.request({
+            url: `${config.baseUrl}/api/auth/chorus`,
+            method: 'post',
+            data: {
+              mediaId: serverId,
+              audioId: this.currentMusic._id,
+              openid: localStorage.getItem('openid')
+            }
+          })
+          this.finalUrl = _res.data.data.finalUrl
+        }
+      })
     }
   },
   components: {

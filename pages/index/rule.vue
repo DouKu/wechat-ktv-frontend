@@ -29,33 +29,29 @@
 </template>
 
 <script>
+import axios from 'axios'
+import config from '../config'
 import popupSelect from '../../components/popup-select.vue'
 export default {
   methods: {
     toSelectSong () {
       this.open = true
     },
-    handleSelectSong () {
-      this.$router.push('/personal')
+    handleSelectSong (item) {
+      this.$router.push({ path: '/personal', query: { music: item } })
     }
+  },
+  async mounted () {
+    const res = await axios.request({
+      url: `${config.baseUrl}/api/auth/audio`,
+      method: 'get'
+    })
+    this.musics = res.data.data
   },
   data () {
     return {
       open: false,
-      musics: [
-        {
-          name: '死了都要爱'
-        },
-        {
-          name: '离歌'
-        },
-        {
-          name: '火烧的寂寞'
-        },
-        {
-          name: 'OneNight in 北京'
-        }
-      ]
+      musics: []
     }
   },
   components: {
