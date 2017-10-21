@@ -72,7 +72,7 @@ export default {
 .p-rule {
   width: 100%;
   height: 100%;
-  background-image: url("~assets/images/rule/background.png");
+  background-image: url("~assets/images/rule/background.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;

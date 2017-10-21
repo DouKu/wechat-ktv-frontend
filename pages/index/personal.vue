@@ -90,7 +90,7 @@ export default {
   position: relative;
   height: 100%;
   overflow: auto;
-  background-image: url('~assets/images/personal/background.png');
+  background-image: url('~assets/images/personal/background.jpg');
   background-size: 100% 100%;
   background-attachment: local;
   background-position: center center;
