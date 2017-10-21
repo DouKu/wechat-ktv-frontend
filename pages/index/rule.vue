@@ -75,7 +75,7 @@ export default {
   background-image: url("~assets/images/rule/background.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-attachment: local;
+  background-attachment: fixed;
   overflow: auto;
   min-height: 1200px;
 }

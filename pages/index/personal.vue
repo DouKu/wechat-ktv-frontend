@@ -86,7 +86,8 @@ export default {
   height: 100%;
   overflow: auto;
   background-image: url("~assets/images/personal/background.png");
-  background-size: cover;
+  background-size: scroll;
+  background-size: 100% 100%;
   background-attachment: local;
   background-repeat: no-repeat;
 }
