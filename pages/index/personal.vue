@@ -77,7 +77,6 @@ export default {
   },
   methods: {
     preAudioEnd () {
-      this.$refs.src = this.finalUrl
       this.$refs.afterAudio.play()
     },
     startPreVoice () {
@@ -105,6 +104,11 @@ export default {
     },
     handleMusicAction () {
       this.status = !this.status
+      if (this.status) {
+        this.startPreVoice()
+      } else {
+
+      }
     },
     uploadVoice () {
       const wx = window.wx
@@ -123,6 +127,7 @@ export default {
             }
           })
           this.finalUrl = _res.data.data.finalUrl
+          this.$refs.afterAudio.src = this.finalUrl
         }
       })
     }
