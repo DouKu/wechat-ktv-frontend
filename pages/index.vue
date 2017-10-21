@@ -4,6 +4,7 @@
       <div class="w-auth-model">
         微信授权<br>
         <a :href="authUrl">授权登录</a>
+        <a @click="router.push('/cover')">next</a>
       </div>
     </template>
     <template v-else>
@@ -86,12 +87,12 @@ export default {
           }
         })
         window.localStorage.setItem('openid', res.data.data.openid)
-        this.$router.push('/cover')
+        // this.$router.push('/cover')
       } catch (error) {
       }
     } else {
       this.showToAuth = false
-      this.$router.push('/cover')
+      // this.$router.push('/cover')
     }
   }
 }
