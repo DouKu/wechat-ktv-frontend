@@ -1,7 +1,7 @@
 <template>
   <div class="p-cover">
     <img class="w-show-img" src="~assets/images/cover/main.png"></img>
-    <div class="w-start-btn" @click="changeRouter">开始游戏 ▶</div>
+    <div class="w-start-btn" @click="changeRouter">开始游戏&nbsp▶</div>
   </div>
 </template>
 
@@ -25,6 +25,8 @@ export default {
   align-items: center;
   background-image: url("~assets/images/background.png");
   background-size: 100% 100%;
+  background-attachment: local;
+  background-repeat: no-repeat;
   overflow: auto;
 }
 .w-show-img {

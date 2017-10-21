@@ -23,8 +23,8 @@
       </div>
       <div class="w-input-hint-text"><div><span>*</span>此信息仅做获奖联系使用</div></div>
     </div>
-    <div class="w-start-btn" @click="handleSelectSong">开始选歌 ▶</div>
-    <popup-select :musics="musics" v-model="open"></popup-select>
+    <div class="w-start-btn" @click="toSelectSong">开始选歌&nbsp▶</div>
+    <popup-select :musics="musics" v-model="open" @selectSong="handleSelectSong"></popup-select>
   </div> 
 </template>
 
@@ -32,8 +32,11 @@
 import popupSelect from '../../components/popup-select.vue'
 export default {
   methods: {
-    handleSelectSong () {
+    toSelectSong () {
       this.open = true
+    },
+    handleSelectSong () {
+      this.$router.push('/personal')
     }
   },
   data () {
@@ -69,6 +72,7 @@ export default {
   background-image: url("~assets/images/rule/background.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  background-attachment: local;
   overflow: auto;
   min-height: 1200px;
 }

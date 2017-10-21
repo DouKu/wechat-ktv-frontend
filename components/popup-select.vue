@@ -29,7 +29,7 @@ export default {
       setTimeout(() => {
         this.show = false
         this.$emit('input', this.show)
-        this.$emit('selectMusic', item)
+        this.$emit('selectSong', item)
       }, 400)
     }
   },
