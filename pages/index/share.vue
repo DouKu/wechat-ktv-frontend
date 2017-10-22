@@ -83,6 +83,8 @@ export default {
     this.chorus = res.data.data
     this.preUrl = this.chorus.audio.url
     this.finalUrl = this.chorus.recordUrl
+    this.$refs.preAudio.src = this.preUrl
+    this.$refs.afterAudio.src = this.finalUrl
     const len = 5 - this.chorus.users.length
     if (len > 0) {
       for (let i = 0; i < len; i++) {
@@ -113,6 +115,11 @@ export default {
     },
     preAudioEnd () {
       this.$refs.afterAudio.play()
+      document.addEventListener('WeixinJSBridgeReady', () => {
+			  window.WeixinJSBridge.invoke('getNetworkType', {}, (e) => {
+          this.$refs.afterAudio.play()
+        })
+      })
     },
     afterAudioEnd () {
       this.status = false
