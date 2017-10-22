@@ -1,11 +1,13 @@
 <template>
   <div :class="['p-share',{'no-scroll': showModel}]">
+    <audio ref="preAudio" :src="preUrl" preload="true" @ended="preAudioEnd"></audio>
+    <audio ref="afterAudio" :src="finalUrl" @ended="afterAudioEnd" preload="true"></audio>
     <img class="w-theme-show" src="~assets/images/personal/theme.png"></img>
     <div class="w-dick-container">
       <div class="w-dick-progress">
-        <img class="w-song-image" src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg">
-          <template v-if="status"><div class="w-action-btn w-action-btn-play"></div></template>
-          <template v-else><div class="w-action-btn w-action-btn-pause"></div></template>
+        <img :class="['w-song-image', { rotation: status }]" src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg">
+          <template v-if="!status"><div class="w-action-btn w-action-btn-play" @click="toPlay"></div></template>
+          <template v-else><div class="w-action-btn w-action-btn-pause" @click="toStop"></div></template>
         </img>
       </div>
       <div class="w-dick-progress-icons-row">
@@ -55,6 +57,14 @@ import userImg from '../../assets/images/user.png'
 import shareModel from '../../components/share-model.vue'
 
 export default {
+  watch: {
+    preUrl (val) {
+      this.$refs.preAudio.src = val
+    },
+    finalUrl (val) {
+      this.$refs.afterAudio.src = val
+    }
+  },
   async mounted () {
     const openid = window.localStorage.getItem('openid')
     if (!openid) {
@@ -71,6 +81,8 @@ export default {
       method: 'get'
     })
     this.chorus = res.data.data
+    this.preUrl = this.chorus.audio.url
+    this.finalUrl = this.chorus.recordUrl
     const len = 5 - this.chorus.users.length
     if (len > 0) {
       for (let i = 0; i < len; i++) {
@@ -90,8 +102,20 @@ export default {
     this.settingShare()
   },
   methods: {
+    toPlay () {
+      this.status = true
+      this.$refs.preAudio.play()
+    },
+    toStop () {
+    },
     toJoin () {
       this.$router.push({ path: '/personal', query: { chorusId: this.chorusId, musicId: this.chorus.audio._id } })
+    },
+    preAudioEnd () {
+      this.$refs.afterAudio.play()
+    },
+    afterAudioEnd () {
+      this.status = false
     },
     async settingShare () {
       const wx = window.wx
@@ -152,6 +176,8 @@ export default {
       chorus: {
         user: []
       },
+      preUrl: '',
+      finalUrl: '',
       toJoinFlag: true,
       status: false,
       showModel: false
@@ -430,5 +456,17 @@ export default {
   height: 350px;
 }
 
+.rotation {
+  animation: rotating 6s infinite linear;
+}
+
+@keyframes rotating {
+  from { 
+    transform: rotate(0deg); 
+  }
+  to { 
+    transform: rotate(360deg); 
+  }
+}
 </style>
 

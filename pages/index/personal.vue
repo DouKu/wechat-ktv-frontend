@@ -5,7 +5,7 @@
     <img class="w-theme-show" src="~assets/images/personal/theme.png"></img>
     <div class="w-dick-container">
       <div class="w-dick-progress">
-        <img class="w-song-image" src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg">
+        <img :class="['w-song-image', { rotation: status }]" src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg">
           <template v-if="!status"><div v-show="recorded" class="w-action-btn w-action-btn-play" @click="tryListen"></div></template>
           <template v-else><div v-show="recorded" class="w-action-btn w-action-btn-pause" @click="stopListen"></div></template>
         </img>
@@ -479,6 +479,19 @@ export default {
   font-weight: bold;
   font-size: 40px;
   text-align: center;
+}
+
+.rotation {
+  animation: rotating 6s infinite linear;
+}
+
+@keyframes rotating {
+  from { 
+    transform: rotate(0deg); 
+  }
+  to { 
+    transform: rotate(360deg); 
+  }
 }
 </style>
 
