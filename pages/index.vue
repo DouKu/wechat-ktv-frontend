@@ -74,7 +74,7 @@ export default {
     const wechatCode = this.$route.query.code
     const saveOpenId = window.localStorage.getItem('openid')
     if (!saveOpenId && !wechatCode) {
-      // this.showToAuth = true
+      this.showToAuth = true
     } else if (wechatCode && !saveOpenId) {
       this.showToAuth = false
       try {
