@@ -69,7 +69,7 @@ export default {
       url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
       method: 'get'
     })
-    console.log(res.data.data)
+    this.chorus = res.data.data
     const len = 5 - this.chorus.users.length
     if (len > 0) {
       for (let i = 0; i < len; i++) {
@@ -79,7 +79,6 @@ export default {
         })
       }
     }
-    this.chorus = res.data.data
     this.chorus.users.forEach(item => {
       if (item.user.openid === openid) {
         this.toJoinFlag = false
