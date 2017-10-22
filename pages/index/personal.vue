@@ -21,12 +21,7 @@
       </div>
     </div>
     <div class="w-btn-container">
-      <template v-if="status">
-        <div class="w-btn-item" @click="startRecord">重新录制</div>
-      </template>
-      <template v-else>
-        <div class="w-btn-item" @click="startRecordFull">开始录制</div>
-      </template>
+      <div class="w-btn-item" @click="startRecordFull">{{recorded ? '重新录制' : chorusId ? '加入录制' : '开始录制'}}</div>
       <div class="w-btn-item" @click="toFinish">完成</div>
     </div>
     <div class="w-users-container">
@@ -68,7 +63,7 @@ import toast from '../../components/toast.vue'
 export default {
   data () {
     return {
-      recordId: '',
+      chorusId: '',
       status: false,
       currentMusic: {},
       localId: '',
@@ -79,12 +74,19 @@ export default {
     }
   },
   watch: {
+    finalUrl (val) {
+      this.$refs.afterAudio.src = val
+    },
     currentMusic (val) {
-      console.log(val)
       this.$refs.preAudio.src = this.currentMusic.url
     }
   },
   async mounted () {
+    mounted () {
+      if (!window.localStorage.getItem('openid')) {
+        this.$router.push('/')
+      }
+    },
     if (this.$route.query.musicId) {
       const res = await axios.request({
         url: `${config.baseUrl}/api/auth/audio/${this.$route.query.musicId}`,
@@ -94,18 +96,28 @@ export default {
     } else {
       this.$router.push('/rule')
     }
+    if (this.$route.query.chorusId) {
+      this.chorusId = this.$route.query.chorusId
+      const res = await axios.request({
+        url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
+        method: 'get'
+      })
+      this.currentMusic = res.data.data.audio
+      this.finalUrl = res.data.data.recordUrl
+    }
   },
   methods: {
     preAudioEnd () {
-      if (!this.recordId && !this.localId) {
+      if (!this.chorusId && !this.localId) {
         this.startRecord()
-      } else if (!this.recordId && this.localId) {
+      } else if (!this.chorusId && this.localId) {
         this.playLoaclVoice()
       } else {
         this.$refs.afterAudio.play()
       }
     },
     afterAudioEnd () {
+      this.playLoaclVoice()
     },
     startPreVoice () {
       this.$refs.preAudio.play()
@@ -114,7 +126,6 @@ export default {
       this.startPreVoice()
     },
     startRecord () {
-      this.recorded = false
       this.status = false
       const wx = window.wx
       wx.startRecord()
@@ -162,16 +173,29 @@ export default {
         isShowProgressTips: 0,
         success: async (res) => {
           const serverId = res.serverId // 返回音频的服务器端ID
-          const _res = await axios.request({
-            url: `${config.baseUrl}/api/auth/chorus`,
-            method: 'post',
-            data: {
-              mediaId: serverId,
-              audioId: this.currentMusic._id,
-              openid: localStorage.getItem('openid')
-            }
-          })
-          this.$router.push({ path: '/share', query: { chorusId: _res.data.data.chorusId } })
+          if (!this.chorusId) {
+            const _res = await axios.request({
+              url: `${config.baseUrl}/api/auth/chorus`,
+              method: 'post',
+              data: {
+                mediaId: serverId,
+                audioId: this.currentMusic._id,
+                openid: localStorage.getItem('openid')
+              }
+            })
+            this.$router.push({ path: '/share', query: { chorusId: _res.data.data.chorusId } })
+          } else {
+            const _res = await axios.request({
+              url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
+              method: 'patch',
+              data: {
+                mediaId: serverId,
+                audioId: this.currentMusic._id,
+                openid: localStorage.getItem('openid')
+              }
+            })
+            this.$router.push({ path: '/share', query: { chorusId: _res.data.data.chorusId } })
+          }
         }
       })
     }

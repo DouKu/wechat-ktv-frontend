@@ -7,6 +7,11 @@
 
 <script>
 export default {
+  mounted () {
+    if (!window.localStorage.getItem('openid')) {
+      this.$router.push('/')
+    }
+  },
   methods: {
     changeRouter () {
       setTimeout(() => {
