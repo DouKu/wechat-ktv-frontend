@@ -82,11 +82,9 @@ export default {
     }
   },
   async mounted () {
-    mounted () {
-      if (!window.localStorage.getItem('openid')) {
-        this.$router.push('/')
-      }
-    },
+    if (!window.localStorage.getItem('openid')) {
+      this.$router.push('/')
+    }
     if (this.$route.query.musicId) {
       const res = await axios.request({
         url: `${config.baseUrl}/api/auth/audio/${this.$route.query.musicId}`,
