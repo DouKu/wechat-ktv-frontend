@@ -70,16 +70,16 @@ export default {
       method: 'get'
     })
     console.log(res.data.data)
-    this.chorus = res.data.data
     const len = 5 - this.chorus.users.length
     if (len > 0) {
       for (let i = 0; i < len; i++) {
-        this.chorus.user.push({
+        this.chorus.users.push({
           headimgurl: userImg,
           nickname: '未加入'
         })
       }
     }
+    this.chorus = res.data.data
     this.chorus.users.forEach(item => {
       if (item.user.openid === openid) {
         this.toJoinFlag = false
