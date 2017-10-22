@@ -9,7 +9,7 @@
 export default {
   mounted () {
     if (!window.localStorage.getItem('openid')) {
-      this.$router.push('/')
+      this.$router.push({ path: '/', query: { redirect: '/cover' } })
     }
   },
   methods: {

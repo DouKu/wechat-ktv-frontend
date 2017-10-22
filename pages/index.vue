@@ -73,6 +73,9 @@ export default {
     })
     const wechatCode = this.$route.query.code
     const saveOpenId = window.localStorage.getItem('openid')
+    if (this.$route.query.redirect) {
+      window.localStorage.setItem('redirect', this.$route.query.redirect)
+    }
     if (!saveOpenId && !wechatCode) {
       this.showToAuth = true
     } else if (wechatCode && !saveOpenId) {
@@ -86,12 +89,12 @@ export default {
           }
         })
         window.localStorage.setItem('openid', res.data.data.openid)
-        // this.$router.push('/cover')
+        const redirect = window.localStorage.getItem('redirect') || '/cover'
+        this.$router.push(redirect)
       } catch (error) {
       }
     } else {
       this.showToAuth = false
-      // this.$router.push('/cover')
     }
   }
 }
