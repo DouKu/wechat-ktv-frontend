@@ -194,7 +194,7 @@ export default {
           } else {
             const _res = await axios.request({
               url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
-              method: 'put',
+              method: 'patch',
               data: {
                 mediaId: serverId,
                 audioId: this.currentMusic._id,
