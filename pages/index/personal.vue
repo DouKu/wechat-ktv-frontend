@@ -1,5 +1,5 @@
 <template>
-  <div :class="['p-personal', {'no-scroll': showModel}]">
+  <div class="p-personal">
     <audio ref="preAudio" :src="currentMusic.url" preload="true" @ended="preAudioEnd"></audio>
     <audio ref="afterAudio" :src="finalUrl" @ended="afterAudioEnd" preload="true"></audio>
     <img class="w-theme-show" src="~assets/images/personal/theme.png"></img>
@@ -57,7 +57,6 @@
     <div class="w-score-container">
       <div class="w-score-title">排行榜</div>
     </div>
-    <share-model v-model="showModel"></share-model>
     <toast :text="toastText" :show="showToast"></toast>
   </div>
 </template>
@@ -65,14 +64,12 @@
 <script>
 import axios from 'axios'
 import config from '../config'
-import shareModel from '../../components/share-model.vue'
 import toast from '../../components/toast.vue'
 export default {
   data () {
     return {
       recordId: '',
       status: false,
-      showModel: false,
       currentMusic: {},
       localId: '',
       finalUrl: '',
@@ -175,7 +172,6 @@ export default {
     }
   },
   components: {
-    shareModel,
     toast
   }
 }

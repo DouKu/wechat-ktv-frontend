@@ -23,7 +23,7 @@
       </div>
       <div class="w-input-hint-text"><div><span>*</span>此信息仅做获奖联系使用</div></div>
     </div>
-    <div class="w-start-btn" @click="toSelectSong">开始选歌&nbsp▶</div>
+    <div class="w-start-btn" @click="toSelectSong">开始选歌<img src="~assets/images/play.png"></img></div>
     <popup-select :musics="musics" v-model="open" @selectSong="handleSelectSong"></popup-select>
   </div> 
 </template>
@@ -169,7 +169,7 @@ export default {
   height: 90px;
   font-size: 35px;
   margin-top: 20px;
-  padding-top: 55px;
+  padding-top: 35px;
   padding-left: 16px;
   text-align: center;
   color: #ffb5ff;
@@ -177,5 +177,9 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   text-shadow: -5px 0 20px #ad47b2, 0 0 20px #ad47b2, 5px 0 20px #ad47b2, 0 5.5px 20px #ad47b2;
+}
+.w-start-btn > img {
+  position: relative;
+  top: 20px;
 }
 </style>
