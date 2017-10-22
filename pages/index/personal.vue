@@ -6,7 +6,7 @@
     <div class="w-dick-container">
       <div class="w-dick-progress">
         <img class="w-song-image" src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg">
-          <template v-if="status"><div v-show="recorded" class="w-action-btn w-action-btn-play" @click="tryListen"></div></template>
+          <template v-if="!status"><div v-show="recorded" class="w-action-btn w-action-btn-play" @click="tryListen"></div></template>
           <template v-else><div v-show="recorded" class="w-action-btn w-action-btn-pause" @click="stopListen"></div></template>
         </img>
       </div>
@@ -115,6 +115,10 @@ export default {
       }
     },
     afterAudioEnd () {
+      if (this.status) {
+        this.playLoaclVoice()
+        return
+      }
       this.startRecord()
     },
     startPreVoice () {
@@ -124,7 +128,7 @@ export default {
       this.startPreVoice()
     },
     startRecord () {
-      this.status = false
+      this.recorded = false
       const wx = window.wx
       wx.startRecord()
       setTimeout(() => {
@@ -137,13 +141,13 @@ export default {
       this.startPreVoice()
     },
     stopListen () {
+      this.status = false
     },
     stopRecord () {
       const wx = window.wx
       wx.stopRecord({
         success: res => {
           this.recorded = true
-          this.status = true
           this.localId = res.localId
         }
       })
@@ -162,6 +166,11 @@ export default {
       const wx = window.wx
       wx.playVoice({
         localId: this.localId // 需要播放的音频的本地ID，由stopRecord接口获得
+      })
+      wx.onVoicePlayEnd({
+        success: (res) => {
+          this.status = false
+        }
       })
     },
     uploadVoice () {
@@ -185,7 +194,7 @@ export default {
           } else {
             const _res = await axios.request({
               url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
-              method: 'patch',
+              method: 'put',
               data: {
                 mediaId: serverId,
                 audioId: this.currentMusic._id,
