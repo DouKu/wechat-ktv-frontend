@@ -115,11 +115,6 @@ export default {
     },
     preAudioEnd () {
       this.$refs.afterAudio.play()
-      document.addEventListener('WeixinJSBridgeReady', () => {
-			  window.WeixinJSBridge.invoke('getNetworkType', {}, (e) => {
-          this.$refs.afterAudio.play()
-        })
-      })
     },
     afterAudioEnd () {
       this.status = false
