@@ -106,7 +106,7 @@ export default {
     }
   },
   methods: {
-    preAudioEnd () {
+    async preAudioEnd () {
       if (!this.chorusId && !this.localId) {
         this.startRecord()
       } else if (!this.chorusId && this.localId) {

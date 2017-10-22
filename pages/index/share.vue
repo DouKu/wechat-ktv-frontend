@@ -113,7 +113,7 @@ export default {
     toJoin () {
       this.$router.push({ path: '/personal', query: { chorusId: this.chorusId, musicId: this.chorus.audio._id } })
     },
-    preAudioEnd () {
+    async preAudioEnd () {
       const wx = window.wx
       const res = await axios.request({
         url: `${config.baseUrl}/api/wechat/getJSConfig`,
