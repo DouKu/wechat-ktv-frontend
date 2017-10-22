@@ -103,10 +103,10 @@ export default {
         }
       })
       const chorus = _res.data.data
-      // if (chorus._id && this.$route.path !== '/share') {
-      //   this.$router.push({ path: '/share', query: { chorusId: chorus._id } })
-      //   return
-      // }
+      if (chorus._id && this.$route.path !== '/share') {
+        this.$router.push({ path: '/share', query: { chorusId: chorus._id } })
+        return
+      }
       if (this.$route.path === '/') {
         this.$router.push('/cover')
       }
