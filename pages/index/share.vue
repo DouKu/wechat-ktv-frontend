@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     toJoin () {
-      this.$router.push({ path: '/person', query: { chorusId: this.chorusId } })
+      this.$router.push({ path: '/personal', query: { chorusId: this.chorusId } })
     },
     async settingShare () {
       const wx = window.wx
