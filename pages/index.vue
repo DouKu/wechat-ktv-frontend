@@ -98,6 +98,14 @@ export default {
         this.$router.push('/cover')
       }
       this.showToAuth = false
+      const _res = await axios.request({
+        url: `${config.baseUrl}/api/auth/chorus`,
+        method: 'get'
+      })
+      const chorus = _res.data.data
+      if (chorus._id) {
+        this.$router.push({ path: '/share', query: { chorusId: chorus._id } })
+      }
     }
   }
 }
