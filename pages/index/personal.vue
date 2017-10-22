@@ -6,8 +6,8 @@
     <div class="w-dick-container">
       <div class="w-dick-progress">
         <img class="w-song-image" src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg">
-          <template v-if="status"><div v-show="recorded" class="w-action-btn w-action-btn-play" @click="handleMusicAction"></div></template>
-          <template v-else><div v-show="recorded" class="w-action-btn w-action-btn-pause" @click="handleMusicAction"></div></template>
+          <template v-if="status"><div v-show="recorded" class="w-action-btn w-action-btn-play" @click="tryListen"></div></template>
+          <template v-else><div v-show="recorded" class="w-action-btn w-action-btn-pause" @click="stopListen"></div></template>
         </img>
       </div>
       <div class="w-dick-progress-icons-row">
@@ -95,8 +95,10 @@ export default {
   },
   methods: {
     preAudioEnd () {
-      if (!this.recordId) {
+      if (!this.recordId && !this.localId) {
         this.startRecord()
+      } else if (!this.recordId && this.localId) {
+        this.playLoaclVoice()
       } else {
         this.$refs.afterAudio.play()
       }
@@ -119,6 +121,12 @@ export default {
         this.stopRecord()
       }, 15000)
     },
+    tryListen () {
+      this.status = true
+      this.startPreVoice()
+    },
+    stopListen () {
+    },
     stopRecord () {
       const wx = window.wx
       wx.stopRecord({
@@ -139,14 +147,11 @@ export default {
       }
       this.uploadVoice()
     },
-    handleMusicAction () {
+    playLoaclVoice () {
       const wx = window.wx
-      this.status = !this.status
-      if (this.status) {
-        wx.playVoice({
-          localId: this.localId // 需要播放的音频的本地ID，由stopRecord接口获得
-        })
-      }
+      wx.playVoice({
+        localId: this.localId // 需要播放的音频的本地ID，由stopRecord接口获得
+      })
     },
     uploadVoice () {
       const wx = window.wx
