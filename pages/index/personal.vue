@@ -123,6 +123,8 @@ export default {
       const wx = window.wx
       wx.stopRecord({
         success: res => {
+          this.recorded = true
+          this.status = true
           this.localId = res.localId
         }
       })
@@ -162,10 +164,6 @@ export default {
               openid: localStorage.getItem('openid')
             }
           })
-          this.finalUrl = _res.data.data.finalUrl
-          this.$refs.afterAudio.src = this.finalUrl
-          this.status = true
-          this.recorded = true
           this.toastText = _res.data.data._id
           this.showToast = true
           setTimeout(() => {
