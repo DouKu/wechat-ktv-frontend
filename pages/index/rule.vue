@@ -38,7 +38,7 @@ export default {
       this.open = true
     },
     handleSelectSong (item) {
-      this.$router.push({ path: '/personal', query: { music: JSON.stringify(item) } })
+      this.$router.push({ path: '/personal', query: { musicId: item._id } })
     }
   },
   async mounted () {

@@ -83,9 +83,13 @@ export default {
       this.$refs.preAudio.src = this.currentMusic.url
     }
   },
-  mounted () {
-    if (this.$route.query.music) {
-      this.currentMusic = JSON.parse(this.$route.query.music)
+  async mounted () {
+    if (this.$route.query.musicId) {
+      const audio = await axios.request({
+        url: `${config.baseUrl}/api/auth/audio/${this.$route.query.musicId}`,
+        method: 'get'
+      })
+      this.currentMusic = audio
     } else {
       this.$router.push('/rule')
     }

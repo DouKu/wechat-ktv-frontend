@@ -81,7 +81,7 @@ export default {
       method: 'get'
     })
     console.log(res.data.data)
-    this.chorus = res.data.data.chorus
+    this.chorus = res.data.data
   },
   methods: {
     toShareFriend () {
