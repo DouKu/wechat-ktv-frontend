@@ -115,7 +115,7 @@ export default {
       }
     },
     afterAudioEnd () {
-      this.playLoaclVoice()
+      this.startRecord()
     },
     startPreVoice () {
       this.$refs.preAudio.play()
