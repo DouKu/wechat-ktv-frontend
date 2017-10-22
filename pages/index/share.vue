@@ -56,7 +56,7 @@
       </div>
     </div>
     <div class="w-btn-container">
-      <div class="w-continue-btn">参加歌唱<img src="~assets/images/play.png"></img></div>
+      <div class="w-continue-btn" @click="toJoin">参加歌唱<img src="~assets/images/play.png"></img></div>
       <div class="w-share-btn" @click="toShareFriend">好歌要分享<img src="~assets/images/play.png"></img></div>
     </div>
     <img src="~assets/images/share/code.png" class="w-star-code"></img>
@@ -88,8 +88,26 @@ export default {
     this.settingShare()
   },
   methods: {
-    settingShare () {
+    toJoin () {
+      this.$router.push({ path: '/person', query: { chorusId: this.chorusId } })
+    },
+    async settingShare () {
       const wx = window.wx
+      const res = await axios.request({
+        url: `${config.baseUrl}/api/wechat/getJSConfig`,
+        method: 'get',
+        params: {
+          url: window.location.href
+        }
+      })
+      wx.config(res.data.data)
+      wx.ready(function () {
+        console.log('config success')// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+      })
+      wx.error(function (res) {
+        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+        console.log('wx jsapi err:', res)
+      })
       wx.onMenuShareTimeline({
         title: `广州美莱周年庆`, // 分享标题
         desc: `我在广州美莱周年庆ktv中获得${this.chorus.totalScore}分`, // 分享描述
