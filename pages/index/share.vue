@@ -32,9 +32,9 @@
         <div class="w-users-outline w-users-outline-right"></div>
       </div>
       <div class="w-users-deatail-box">
-        <div class="w-user-detail-container" v-for="(item, index) in chorus.user" :key="index">
-          <img :src="item.headimgurl"></img>
-          <p>{{item.nickname}}</p>
+        <div class="w-user-detail-container" v-for="(item, index) in chorus.users" :key="index">
+          <img :src="item.user.headimgurl"></img>
+          <p>{{item.user.nickname}}</p>
         </div>
         <img class="w-user-decorate" src="~assets/images/share/line.png"></img>      
       </div>
@@ -74,8 +74,10 @@ export default {
     if (len > 0) {
       for (let i = 0; i < len; i++) {
         this.chorus.users.push({
-          headimgurl: userImg,
-          nickname: '未加入'
+          user: {
+            headimgurl: userImg,
+            nickname: '未加入'
+          }
         })
       }
     }
