@@ -169,11 +169,11 @@ export default {
               openid: localStorage.getItem('openid')
             }
           })
-          this.toastText = _res.data.data._id
+          this.toastText = _res.data.data.chorusId
           this.showToast = true
           setTimeout(() => {
             this.showToast = false
-          }, 1000)
+          }, 5000)
         }
       })
     }
