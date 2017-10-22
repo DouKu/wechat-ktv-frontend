@@ -59,6 +59,7 @@
     </div>
     <share-model v-model="showModel"></share-model>
     <toast :text="toastText" :show="showToast"></toast>
+    {{toastText}}
   </div>
 </template>
 
@@ -170,10 +171,9 @@ export default {
             }
           })
           this.toastText = _res.data.data.chorusId
-          this.showToast = true
           setTimeout(() => {
-            this.showToast = false
-          }, 5000)
+            this.$router.push({ path: '/share', query: { chorusId: this.toastText } })
+          }, 10000)
         }
       })
     }
