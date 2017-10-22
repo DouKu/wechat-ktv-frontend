@@ -71,13 +71,11 @@ import shareModel from '../../components/share-model.vue'
 
 export default {
   async mounted () {
-    // if (!this.$route.query.chorusId) {
-    //   this.$router.push('/rule')
-    //   return
-    // } else {
-    this.chorusId = '59ec51059469dd266f4cb7a4'
-    // }
-    // this.chorusId = this.$route.query.chorusId
+    if (!this.$route.query.chorusId) {
+      this.$router.push('/rule')
+      return
+    }
+    this.chorusId = this.$route.query.chorusId
     const res = await axios.request({
       url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
       method: 'get'
@@ -333,7 +331,7 @@ export default {
 
 .w-btn-container {
   position: relative;
-  top: 650px;
+  top: 680px;
   height: 150px;
   display: flex;
   align-items: center;
@@ -342,17 +340,20 @@ export default {
 
 .w-continue-btn, .w-share-btn {
   width: 360px;
-  height: 90px;
+  height: 100px;
   font-size: 35px;
-  margin-top: 20px;
-  padding-top: 32px;
-  padding-left: 18px;
+  line-height: 120px;
   text-align: center;
   color: #ffb5ff;
-  background-image: url("~assets/images/rule/btn.png");
+  margin-bottom: 25px;
+  background-image: url("~assets/images/pink-btn.png");
   background-repeat: no-repeat;
   background-size: cover;
   text-shadow: -5px 0 20px #ad47b2, 0 0 20px #ad47b2, 5px 0 20px #ad47b2, 0 5.5px 20px #ad47b2;
+}
+
+.w-continue-btn:active, .w-share-btn:active {
+  transform: scale(1.2);
 }
 
 .w-continue-btn > img,

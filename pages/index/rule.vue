@@ -164,19 +164,23 @@ export default {
   color: red;
 }
 .w-start-btn {
-  margin: 15px auto;
+  top: 40px;
+  position: relative;
+  margin: 0 auto;
   width: 360px;
-  height: 90px;
+  height: 100px;
   font-size: 35px;
-  margin-top: 20px;
-  padding-top: 35px;
-  padding-left: 16px;
+  line-height: 120px;
   text-align: center;
   color: #ffb5ff;
-  background-image: url("~assets/images/rule/btn.png");
+  margin-bottom: 25px;
+  background-image: url("~assets/images/pink-btn.png");
   background-repeat: no-repeat;
   background-size: cover;
   text-shadow: -5px 0 20px #ad47b2, 0 0 20px #ad47b2, 5px 0 20px #ad47b2, 0 5.5px 20px #ad47b2;
+}
+.w-start-btn:active {
+  transform: scale(1.2);
 }
 .w-start-btn > img {
   position: relative;
