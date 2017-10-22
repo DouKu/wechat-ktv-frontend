@@ -6,8 +6,8 @@
     <div class="w-dick-container">
       <div class="w-dick-progress">
         <img class="w-song-image" src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg">
-          <template v-if="status"><div class="w-action-btn w-action-btn-play" @click="handleMusicAction"></div></template>
-          <template v-else><div class="w-action-btn w-action-btn-pause" @click="handleMusicAction"></div></template>
+          <template v-if="status"><div v-show="recorded" class="w-action-btn w-action-btn-play" @click="handleMusicAction"></div></template>
+          <template v-else><div v-show="recorded" class="w-action-btn w-action-btn-pause" @click="handleMusicAction"></div></template>
         </img>
       </div>
       <div class="w-dick-progress-icons-row">
@@ -25,9 +25,9 @@
         <div class="w-btn-item" @click="startRecord">重新录制</div>
       </template>
       <template v-else>
-        <div class="w-btn-item" @click="startRecord">开始录制</div>
+        <div class="w-btn-item" @click="startRecordFull">开始录制</div>
       </template>
-      <div class="w-btn-item" @click="toShareFriend">好友一起唱</div>
+      <div class="w-btn-item" @click="toFinish">完成</div>
     </div>
     <div class="w-users-container">
       <div class="w-users-outline-box w-users-outline-box-left">
@@ -58,6 +58,7 @@
       <div class="w-score-title">排行榜</div>
     </div>
     <share-model v-model="showModel"></share-model>
+    <toast :text="toastText" :show="showToast"></toast>
   </div>
 </template>
 
@@ -65,24 +66,47 @@
 import axios from 'axios'
 import config from '../config'
 import shareModel from '../../components/share-model.vue'
+import toast from '../../components/toast.vue'
 export default {
   data () {
     return {
+      recordId: '',
       status: false,
       showModel: false,
-      currentMusic: this.$route.query.music,
+      currentMusic: {},
       localId: '',
-      finalUrl: ''
+      finalUrl: '',
+      recorded: false,
+      toastText: '请先录制歌曲',
+      showToast: false
+    }
+  },
+  mounted () {
+    if (this.$route.query.music) {
+      this.currentMusic = JSON.parse(this.$route.query.music)
+      console.log(this.currentMusic)
+    } else {
+      this.$router.push('/rule')
     }
   },
   methods: {
     preAudioEnd () {
-      this.$refs.afterAudio.play()
+      if (!this.recordId) {
+        this.startRecord()
+      } else {
+        this.$refs.afterAudio.play()
+      }
+    },
+    afterAudioEnd () {
     },
     startPreVoice () {
       this.$refs.preAudio.play()
     },
+    startRecordFull () {
+      this.startPreVoice()
+    },
     startRecord () {
+      this.recorded = false
       this.status = false
       const wx = window.wx
       wx.startRecord()
@@ -96,19 +120,26 @@ export default {
       wx.stopRecord({
         success: res => {
           this.localId = res.localId
-          this.uploadVoice()
         }
       })
     },
-    toShareFriend () {
-      this.showModel = true
+    toFinish () {
+      if (!this.mediaId) {
+        this.showToast = true
+        setTimeout(() => {
+          this.showToast = false
+        }, 1000)
+        return
+      }
+      this.uploadVoice()
     },
     handleMusicAction () {
+      const wx = window.wx
       this.status = !this.status
       if (this.status) {
-        this.startPreVoice()
-      } else {
-
+        wx.playVoice({
+          localId: this.localId // 需要播放的音频的本地ID，由stopRecord接口获得
+        })
       }
     },
     uploadVoice () {
@@ -130,12 +161,14 @@ export default {
           this.finalUrl = _res.data.data.finalUrl
           this.$refs.afterAudio.src = this.finalUrl
           this.status = true
+          this.recorded = true
         }
       })
     }
   },
   components: {
-    shareModel
+    shareModel,
+    toast
   }
 }
 </script>

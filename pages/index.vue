@@ -4,7 +4,6 @@
       <div class="w-auth-model">
         微信授权<br>
         <a :href="authUrl">授权登录</a>
-        <a @click="router.push('/cover')">next</a>
       </div>
     </template>
     <template v-else>
@@ -75,7 +74,7 @@ export default {
     const wechatCode = this.$route.query.code
     const saveOpenId = window.localStorage.getItem('openid')
     if (!saveOpenId && !wechatCode) {
-      this.showToAuth = true
+      // this.showToAuth = true
     } else if (wechatCode && !saveOpenId) {
       this.showToAuth = false
       try {
