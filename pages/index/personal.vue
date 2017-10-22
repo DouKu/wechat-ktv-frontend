@@ -90,7 +90,7 @@ export default {
         url: `${config.baseUrl}/api/auth/audio/${this.$route.query.musicId}`,
         method: 'get'
       })
-      this.currentMusic = res.data
+      this.currentMusic = res.data.data
     } else {
       this.$router.push('/rule')
     }
