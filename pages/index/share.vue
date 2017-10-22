@@ -59,6 +59,7 @@ export default {
     const openid = window.localStorage.getItem('openid')
     if (!openid) {
       this.$router.push({ path: '/', query: { redirect: '/share' } })
+      return
     }
     if (!this.$route.query.chorusId) {
       this.$router.push('/rule')

@@ -55,6 +55,7 @@ export default {
   async mounted () {
     if (!window.localStorage.getItem('openid')) {
       this.$router.push({ path: '/', query: { redirect: '/rule' } })
+      return
     }
     const res = await axios.request({
       url: `${config.baseUrl}/api/auth/audio`,
