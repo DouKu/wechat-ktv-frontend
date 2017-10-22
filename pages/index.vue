@@ -94,6 +94,9 @@ export default {
       } catch (error) {
       }
     } else {
+      if (this.$route.path === '/') {
+        this.$router.push('/cover')
+      }
       this.showToAuth = false
     }
   }

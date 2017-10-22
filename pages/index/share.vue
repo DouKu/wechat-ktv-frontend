@@ -32,31 +32,15 @@
         <div class="w-users-outline w-users-outline-right"></div>
       </div>
       <div class="w-users-deatail-box">
-        <div class="w-user-detail-container">
-          <img src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg"></img>
-          <p>信</p>
-        </div>
-        <div class="w-user-detail-container">
-          <img src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg"></img>          
-          <p>lgybetter</p>          
-        </div>
-        <div class="w-user-detail-container">
-          <img src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg"></img>
-          <p>dfadd</p>
-        </div>
-        <div class="w-user-detail-container">
-          <img src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg"></img>
-          <p>dfadasdfdfdddddd</p>
-        </div>
-        <div class="w-user-detail-container">
-          <img src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg"></img>
-          <p>dfadf</p>
+        <div class="w-user-detail-container" v-for="(item, index) in chorus.user" :key="index">
+          <img :src="item.headimgurl"></img>
+          <p>{{item.nickname}}</p>
         </div>
         <img class="w-user-decorate" src="~assets/images/share/line.png"></img>      
       </div>
     </div>
     <div class="w-btn-container">
-      <div class="w-continue-btn" @click="toJoin">参加歌唱<img src="~assets/images/play.png"></img></div>
+      <div v-show="toJoinFlag" class="w-continue-btn" @click="toJoin">参加歌唱<img src="~assets/images/play.png"></img></div>
       <div class="w-share-btn" @click="toShareFriend">好歌要分享<img src="~assets/images/play.png"></img></div>
     </div>
     <img src="~assets/images/share/code.png" class="w-star-code"></img>
@@ -67,11 +51,13 @@
 <script>
 import axios from 'axios'
 import config from '../config'
+import userImg from '../../assets/images/user.png'
 import shareModel from '../../components/share-model.vue'
 
 export default {
   async mounted () {
-    if (!window.localStorage.getItem('openid')) {
+    const openid = window.localStorage.getItem('openid')
+    if (!openid) {
       this.$router.push({ path: '/', query: { redirect: '/share' } })
     }
     if (!this.$route.query.chorusId) {
@@ -85,6 +71,20 @@ export default {
     })
     console.log(res.data.data)
     this.chorus = res.data.data
+    const len = 5 - this.chorus.users.length
+    if (len > 0) {
+      for (let i = 0; i < len; i++) {
+        this.chorus.user.push({
+          headimgurl: userImg,
+          nickname: '未加入'
+        })
+      }
+    }
+    this.chorus.users.forEach(item => {
+      if (item.user.openid === openid) {
+        this.toJoinFlag = false
+      }
+    })
     this.settingShare()
   },
   methods: {
@@ -147,7 +147,10 @@ export default {
   data () {
     return {
       chorusId: '',
-      chorus: {},
+      chorus: {
+        user: []
+      },
+      toJoinFlag: true,
       status: false,
       showModel: false
     }

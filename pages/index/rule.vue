@@ -16,10 +16,10 @@
     <div class="w-virtual-line"></div>
     <div class="w-input-container">
       <div class="w-input-item w-input-item-first">
-        姓名: <input></input>
+        姓名: <input v-model="realname"></input>
       </div>
       <div class="w-input-item">
-        手机: <input></input>
+        手机: <input v-model="phoneNumber"></input>
       </div>
       <div class="w-input-hint-text"><div><span>*</span>此信息仅做获奖联系使用</div></div>
     </div>
@@ -37,7 +37,18 @@ export default {
     toSelectSong () {
       this.open = true
     },
-    handleSelectSong (item) {
+    async handleSelectSong (item) {
+      const openid = window.localStorage.getItem('openid')
+      if (this.realname && this.phoneNumber) {
+        await axios.request({
+          url: `${config.baseUrl}/api/auth/updateUserMessage/${openid}`,
+          method: 'put',
+          data: {
+            realname: this.realname,
+            phoneNumber: this.phoneNumber
+          }
+        })
+      }
       this.$router.push({ path: '/personal', query: { musicId: item._id } })
     }
   },
@@ -54,7 +65,9 @@ export default {
   data () {
     return {
       open: false,
-      musics: []
+      musics: [],
+      realname: '',
+      phoneNumber: ''
     }
   },
   components: {
