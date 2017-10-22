@@ -94,17 +94,20 @@ export default {
       } catch (error) {
       }
     } else {
-      if (this.$route.path === '/') {
-        this.$router.push('/cover')
-      }
       this.showToAuth = false
       const _res = await axios.request({
         url: `${config.baseUrl}/api/auth/chorus`,
-        method: 'get'
+        method: 'get',
+        params: {
+          openid: localStorage.getItem('openid')
+        }
       })
       const chorus = _res.data.data
       if (chorus._id) {
         this.$router.push({ path: '/share', query: { chorusId: chorus._id } })
+      }
+      if (this.$route.path === '/') {
+        this.$router.push('/cover')
       }
     }
   }
