@@ -81,10 +81,14 @@ export default {
       showToast: false
     }
   },
+  watch: {
+    currentMusic (val) {
+      this.$refs.preAudio.src = this.currentMusic.url
+    }
+  },
   mounted () {
     if (this.$route.query.music) {
       this.currentMusic = JSON.parse(this.$route.query.music)
-      console.log(this.currentMusic)
     } else {
       this.$router.push('/rule')
     }
@@ -124,7 +128,7 @@ export default {
       })
     },
     toFinish () {
-      if (!this.mediaId) {
+      if (!this.localId) {
         this.showToast = true
         setTimeout(() => {
           this.showToast = false
@@ -162,6 +166,11 @@ export default {
           this.$refs.afterAudio.src = this.finalUrl
           this.status = true
           this.recorded = true
+          this.toastText = _res.data.data._id
+          this.showToast = true
+          setTimeout(() => {
+            this.showToast = false
+          }, 1000)
         }
       })
     }
