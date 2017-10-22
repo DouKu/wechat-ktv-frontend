@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     toJoin () {
-      this.$router.push({ path: '/personal', query: { chorusId: this.chorusId } })
+      this.$router.push({ path: '/personal', query: { chorusId: this.chorusId, musicId: this.chorus.audio._id } })
     },
     async settingShare () {
       const wx = window.wx
@@ -111,7 +111,7 @@ export default {
       wx.onMenuShareTimeline({
         title: `广州美莱周年庆`, // 分享标题
         desc: `我在广州美莱周年庆ktv中获得${this.chorus.totalScore}分`, // 分享描述
-        link: `${config.redirectUrl}/share?chorusId=${this.chorusId}&musicId=${this.chorus.audio._id}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        link: `${config.redirectUrl}/share?chorusId=${this.chorusId}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: 'http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg', // 分享图标
         success: () => {
           console.log(config.recordId, '分享ID')
@@ -126,7 +126,7 @@ export default {
       wx.onMenuShareAppMessage({
         title: `广州美莱周年庆`, // 分享标题
         desc: `我在广州美莱周年庆ktv中获得${this.chorus.totalScore}分`, // 分享描述
-        link: `${config.redirectUrl}/share?chorusId=${this.chorusId}&musicId=${this.chorus.audio._id}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        link: `${config.redirectUrl}/share?chorusId=${this.chorusId}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: 'http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg', // 分享图标
         // type: '', // 分享类型,music、video或link，不填默认为link
         // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
