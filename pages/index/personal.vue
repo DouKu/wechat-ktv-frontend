@@ -22,9 +22,9 @@
     </div>
     <div class="w-lryic-container">
       <h2>曲目: 死了都要爱</h2>
-      <h3 class="w-current-lryic">死了都要爱</h3>
-      <h3>不淋漓精致不痛快</h3>
-      <h3>发挥雪白，图汇燕麦</h3>
+      <h3 class="w-current-lryic">{{curLyric}}</h3>
+      <h3>{{nextOneLyric}}</h3>
+      <h3>{{nextTowLyric}}</h3>
     </div>
     <div class="w-btn-container">
       <div class="w-btn-item" @click="startRecordFull">{{recorded ? '重新录制' : chorusId ? '加入录制' : '开始录制'}}</div>
@@ -69,8 +69,37 @@ import toast from '../../components/toast.vue'
 const dev = config.dev
 
 export default {
+  computed: {
+    curLyric () {
+      let next = this.lyrics[this.times.indexOf(this.second)]
+      if (next) {
+        this.index++
+      } else {
+        next = this.preLyric
+      }
+      return next
+    },
+    nextOneLyric () {
+      return this.lyrics[this.index]
+    },
+    nextTowLyric () {
+      return this.lyrics[this.index + 1]
+    }
+  },
+  watch: {
+    curLyric (val) {
+      this.preLyric = val
+    },
+    finalUrl (val) {
+      this.$refs.afterAudio.src = val
+    },
+    currentMusic (val) {
+      this.$refs.preAudio.src = this.currentMusic.url
+    }
+  },
   data () {
     return {
+      preLyric: '',
       chorusId: '',
       status: false,
       currentMusic: {},
@@ -78,15 +107,20 @@ export default {
       finalUrl: '',
       recorded: false,
       toastText: '请先录制歌曲',
-      showToast: false
-    }
-  },
-  watch: {
-    finalUrl (val) {
-      this.$refs.afterAudio.src = val
-    },
-    currentMusic (val) {
-      this.$refs.preAudio.src = this.currentMusic.url
+      showToast: false,
+      second: 0,
+      index: 0,
+      times: [0, 5, 7, 10, 12, 15],
+      lyrics: [
+        '死了都要爱',
+        '不淋漓尽致不痛快',
+        '发会雪白, 土会掩埋',
+        '思念不腐坏',
+        '到绝路都要爱',
+        '不哭到浪漫不痛快',
+        '...',
+        'end'
+      ]
     }
   },
   async mounted () {
@@ -131,6 +165,16 @@ export default {
       this.startRecord()
     },
     startPreVoice () {
+      this.second = 0
+      this.index = 0
+      let interval = setInterval(() => {
+        this.preLyric = this.curLyric
+        ++this.second
+        console.log(this.second)
+        if (this.second === 15) {
+          clearInterval(interval)
+        }
+      }, 1000)
       this.$refs.preAudio.play()
     },
     startRecordFull () {

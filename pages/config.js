@@ -1,7 +1,7 @@
 export default {
   appId: 'wxed73c69d3bdf1dce',
-  redirectUrl: 'http://119.29.193.240',
-  baseUrl: 'http://119.29.193.240:3001',
+  redirectUrl: 'http://znq.gzmylike.com',
+  baseUrl: 'http://znq.gzmylike.com',
   recordId: '13213',
   chorusId: '',
   dev: true
