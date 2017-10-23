@@ -4,5 +4,5 @@ export default {
   baseUrl: 'http://znq.gzmylike.com',
   recordId: '13213',
   chorusId: '',
-  dev: true
+  dev: false
 }
