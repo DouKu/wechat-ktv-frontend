@@ -6,9 +6,11 @@
 </template>
 
 <script>
+import config from '../config'
+const dev = config.dev
 export default {
   mounted () {
-    if (!window.localStorage.getItem('openid')) {
+    if (!window.localStorage.getItem('openid') && !dev) {
       this.$router.push({ path: '/', query: { redirect: '/cover' } })
     }
   },
@@ -26,6 +28,7 @@ export default {
 .p-cover {
   display: flex;
   height: 100%;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   background-image: url("~assets/images/background.jpg");

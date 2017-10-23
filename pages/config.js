@@ -3,5 +3,6 @@ export default {
   redirectUrl: 'http://119.29.193.240',
   baseUrl: 'http://119.29.193.240:3001',
   recordId: '13213',
-  chorusId: ''
+  chorusId: '',
+  dev: true
 }

@@ -20,7 +20,7 @@
         <div class="w-dick-progress-icon-rb"></div>
       </div>
     </div>
-    <div class="w-score-container">
+    <div class="w-score-container-share-share">
       <!-- <h1>您为这首歌曲贡献了<span>100</span>分</h1> -->
       <h1>您的歌曲获得了<span>{{chorus.totalScore}}</span>高分</h1>
       <h1>超过了100%的K歌之王</h1>
@@ -55,6 +55,7 @@ import axios from 'axios'
 import config from '../config'
 import userImg from '../../assets/images/user.png'
 import shareModel from '../../components/share-model.vue'
+const dev = config.dev
 
 export default {
   watch: {
@@ -67,11 +68,11 @@ export default {
   },
   async mounted () {
     const openid = window.localStorage.getItem('openid')
-    if (!openid) {
+    if (!openid && !dev) {
       this.$router.push({ path: '/', query: { redirect: '/share' } })
       return
     }
-    if (!this.$route.query.chorusId) {
+    if (!this.$route.query.chorusId && !dev) {
       this.$router.push('/rule')
       return
     }
@@ -210,8 +211,8 @@ export default {
 }
 
 .w-dick-container {
-  position: absolute;
-  top: 370px;
+  position: relative;
+  top: -50px;
   left: 0px;
   width: 90%;
   height: 600px;
@@ -305,26 +306,26 @@ export default {
   background-image: url("~assets/images/personal/pause.png");
 }
 
-.w-score-container {
+.w-score-container-share-share {
   position: relative;
-  top: 550px;
+  top: -20px;
   width: 100%;
   height: 50px;
 }
-.w-score-container h1 {
+.w-score-container-share-share h1 {
   text-align: center;
   margin: 0 0;
   font-size: 30px;
   color: #ffffff;
 }
-.w-score-container span {
+.w-score-container-share span {
   font-size: 45px;
   color: #0dccb0;
 }
 
 .w-users-container {
   position: relative;
-  top: 650px;
+  top: 50px;
   display: flex;
   width: 100%;
   height: auto;
@@ -370,6 +371,7 @@ export default {
 }
 
 .w-users-deatail-box {
+  width: 100%;
   height: 150px;
   position: relative;
   top: 26px;
@@ -420,7 +422,7 @@ export default {
 
 .w-btn-container {
   position: relative;
-  top: 680px;
+  top: 90px;
   height: 150px;
   display: flex;
   align-items: center;
@@ -453,7 +455,7 @@ export default {
 
 .w-star-code {
   position: relative;
-  top: 660px;
+  top: 100px;
   width: 700px;
   height: 350px;
 }

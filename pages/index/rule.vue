@@ -32,6 +32,8 @@
 import axios from 'axios'
 import config from '../config'
 import popupSelect from '../../components/popup-select.vue'
+const dev = config.dev
+
 export default {
   methods: {
     toSelectSong () {
@@ -53,7 +55,7 @@ export default {
     }
   },
   async mounted () {
-    if (!window.localStorage.getItem('openid')) {
+    if (!window.localStorage.getItem('openid') && !dev) {
       this.$router.push({ path: '/', query: { redirect: '/rule' } })
       return
     }
@@ -99,7 +101,7 @@ export default {
   margin: 0 12%;
   box-sizing: border-box;
   width: 590px;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: lighter;
   color: #ffffff;
 }

@@ -16,6 +16,7 @@
 /* eslint-disable */
 import axios from 'axios'
 import config from './config'
+const dev = config.dev
 
 export default {
   data () {
@@ -76,39 +77,42 @@ export default {
     if (this.$route.query.redirect) {
       window.localStorage.setItem('redirect', this.$route.query.redirect)
     }
-    if (!saveOpenId && !wechatCode) {
-      this.showToAuth = true
-    } else if (wechatCode && !saveOpenId) {
-      this.showToAuth = false
-      try {
-        const res = await axios.request({
-          method: 'post',
-          url: `${config.baseUrl}/api/wechat/exchangeToken`,
-          data: {
-            code: wechatCode
+    if (!dev) {
+
+      if (!saveOpenId && !wechatCode) {
+        this.showToAuth = true
+      } else if (wechatCode && !saveOpenId) {
+        this.showToAuth = false
+        try {
+          const res = await axios.request({
+            method: 'post',
+            url: `${config.baseUrl}/api/wechat/exchangeToken`,
+            data: {
+              code: wechatCode
+            }
+          })
+          window.localStorage.setItem('openid', res.data.data.openid)
+          const redirect = window.localStorage.getItem('redirect') || '/cover'
+          this.$router.push(redirect)
+        } catch (error) {
+        }
+      } else {
+        this.showToAuth = false
+        const _res = await axios.request({
+          url: `${config.baseUrl}/api/auth/chorus`,
+          method: 'get',
+          params: {
+            openid: localStorage.getItem('openid')
           }
         })
-        window.localStorage.setItem('openid', res.data.data.openid)
-        const redirect = window.localStorage.getItem('redirect') || '/cover'
-        this.$router.push(redirect)
-      } catch (error) {
-      }
-    } else {
-      this.showToAuth = false
-      const _res = await axios.request({
-        url: `${config.baseUrl}/api/auth/chorus`,
-        method: 'get',
-        params: {
-          openid: localStorage.getItem('openid')
+        const chorus = _res.data.data
+        if (chorus._id && this.$route.path !== '/share') {
+          this.$router.push({ path: '/share', query: { chorusId: chorus._id } })
+          return
         }
-      })
-      const chorus = _res.data.data
-      if (chorus._id && this.$route.path !== '/share') {
-        this.$router.push({ path: '/share', query: { chorusId: chorus._id } })
-        return
-      }
-      if (this.$route.path === '/') {
-        this.$router.push('/cover')
+        if (this.$route.path === '/') {
+          this.$router.push('/cover')
+        }
       }
     }
   }

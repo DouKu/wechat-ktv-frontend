@@ -20,6 +20,12 @@
         <div class="w-dick-progress-icon-rb"></div>
       </div>
     </div>
+    <div class="w-lryic-container">
+      <h2>曲目: 死了都要爱</h2>
+      <h3 class="w-current-lryic">死了都要爱</h3>
+      <h3>不淋漓精致不痛快</h3>
+      <h3>发挥雪白，图汇燕麦</h3>
+    </div>
     <div class="w-btn-container">
       <div class="w-btn-item" @click="startRecordFull">{{recorded ? '重新录制' : chorusId ? '加入录制' : '开始录制'}}</div>
       <div class="w-btn-item" @click="toFinish">完成</div>
@@ -60,6 +66,8 @@
 import axios from 'axios'
 import config from '../config'
 import toast from '../../components/toast.vue'
+const dev = config.dev
+
 export default {
   data () {
     return {
@@ -82,7 +90,7 @@ export default {
     }
   },
   async mounted () {
-    if (!window.localStorage.getItem('openid')) {
+    if (!window.localStorage.getItem('openid') && !dev) {
       this.$router.push({ path: '/', query: { redirect: '/personal' } })
       return
     }
@@ -220,6 +228,7 @@ export default {
 }
 .p-personal {
   position: relative;
+  width: 100%;
   height: 100%;
   overflow: auto;
   background-image: url('~assets/images/personal/background.jpg');
@@ -234,8 +243,8 @@ export default {
   margin-top: 15px;
 }
 .w-dick-container {
-  position: absolute;
-  top: 370px;
+  position: relative;
+  top: -50px;
   left: 0px;
   width: 90%;
   height: 600px;
@@ -331,12 +340,29 @@ export default {
   background-image: url("~assets/images/personal/pause.png");
 }
 
+.w-lryic-container {
+  position: relative;
+  top: -70px;
+  color: #ffffff;
+  text-align: center; 
+}
+.w-lryic-container h2 {
+  font-size: 32px;
+}
+.w-lryic-container h3 {
+  color: #ccc;
+  font-size: 28px;
+}
+.w-lryic-container .w-current-lryic {
+  color: #06c6aa;
+}
+
 .w-btn-container {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 600px;
+  top: -80px;
   width: 100%;
   height: 100px;
 }
@@ -360,10 +386,10 @@ export default {
 
 .w-users-container {
   position: relative;
-  top: 650px;
+  top: -50px;
   display: flex;
   width: 100%;
-  height: auto;
+  min-height: 1000px;
   justify-content: center;
 }
 .w-users-outline-box {
@@ -385,7 +411,7 @@ export default {
   width: 500px;
   height: 200px;  
   border: 5px solid #e0d6fe;
-  box-shadow: -5px 0 30px #313777, 0 0 30px #313777, 10px 0 30px #313777, 0 5.5px 30px #313777;
+  box-shadow: -5px 0 15px #313777, 0 0 15px #313777, 8px 0 15px #313777, 0 5px 15px #313777;
   border-radius: 60px;
 }
 .w-users-outline-title {
@@ -396,7 +422,7 @@ export default {
   font-size: 42px;
   line-height: 50px;
   color: #e0d6fe;
-  text-shadow: -5px 0 30px #313777, 0 0 30px #313777, 10px 0 30px #313777, 0 5.5px 30px #313777;
+  text-shadow: -5px 0 15px #313777, 0 0 15px #313777, 8px 0 15px #313777, 0 5px 15px #313777;
 }
 .w-users-outline-left {
   left: 5px;
@@ -429,7 +455,7 @@ export default {
   margin-left: 48px;
   width: 90%;
   box-sizing: border-box;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: lighter;
   color: #ffffff;
 }
@@ -465,7 +491,7 @@ export default {
 }
 .w-score-container {
   position: relative;
-  top: 1570px;
+  top: -100px;
   margin: 0 auto;
   width: 575px;
   height: 640px;
@@ -474,6 +500,7 @@ export default {
   background-repeat: no-repeat;
   border-radius: 10px;
 }
+
 .w-score-title {
   padding-top: 20px;
   font-weight: bold;
