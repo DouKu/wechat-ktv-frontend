@@ -139,10 +139,6 @@ export default {
     }
   },
   async mounted () {
-    if (!window.localStorage.getItem('openid') && !dev) {
-      this.$router.push({ path: '/', query: { redirect: '/personal' } })
-      return
-    }
     if (!config.auth && this.$route.path === '/personal') {
       const wx = window.wx
       const wechat = await axios.request({
@@ -153,7 +149,13 @@ export default {
         }
       })
       wx.config(wechat.data.data)
-      wx.ready(function () {
+      wx.ready(() => {
+        config.auth = true
+        if (!window.localStorage.getItem('openid') && !dev) {
+          this.$router.push({ path: '/', query: { redirect: '/personal' } })
+          return
+        }
+        this.init()
         console.log('config success')// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
       })
       wx.error(function (res) {
@@ -190,42 +192,43 @@ export default {
           // 用户取消分享后执行的回调函数
         }
       })
-      config.auth = true
     }
-    if (this.$route.query.musicId) {
-      const res = await axios.request({
-        url: `${config.baseUrl}/api/auth/audio/${this.$route.query.musicId}`,
-        method: 'get'
-      })
-      this.currentMusic = res.data.data
-      this.musicName = res.data.data.name
-      this.lyrics = [...res.data.data.lyric, '...', 'END']
-      this.times = res.data.data.secondes
-      this.parLen = res.data.data.parLen
-      for (let i = 0; i < this.userNum + 1; i++) {
-        this.timeout = this.timeout + parseInt(this.parLen[i])
-      }
-      console.log(this.timeout)
-    } else {
-      this.$router.push('/rule')
-    }
-    if (this.$route.query.chorusId) {
-      this.chorusId = this.$route.query.chorusId
-      const res = await axios.request({
-        url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
-        method: 'get'
-      })
-      this.progressNum = res.data.data.users.length
-      this.currentMusic = res.data.data.audio
-      this.finalUrl = res.data.data.recordUrl
-    }
-    const rankRes = await axios.request({
-      url: `${config.baseUrl}/api/auth/chorus/rank`,
-      method: 'get'
-    })
-    this.rank = rankRes.data.data
   },
   methods: {
+    async init () {
+      if (this.$route.query.musicId) {
+        const res = await axios.request({
+          url: `${config.baseUrl}/api/auth/audio/${this.$route.query.musicId}`,
+          method: 'get'
+        })
+        this.currentMusic = res.data.data
+        this.musicName = res.data.data.name
+        this.lyrics = [...res.data.data.lyric, '...', 'END']
+        this.times = res.data.data.secondes
+        this.parLen = res.data.data.parLen
+        for (let i = 0; i < this.userNum + 1; i++) {
+          this.timeout = this.timeout + parseInt(this.parLen[i])
+        }
+        console.log(this.timeout)
+      } else {
+        this.$router.push('/rule')
+      }
+      if (this.$route.query.chorusId) {
+        this.chorusId = this.$route.query.chorusId
+        const res = await axios.request({
+          url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
+          method: 'get'
+        })
+        this.progressNum = res.data.data.users.length
+        this.currentMusic = res.data.data.audio
+        this.finalUrl = res.data.data.recordUrl
+      }
+      const rankRes = await axios.request({
+        url: `${config.baseUrl}/api/auth/chorus/rank`,
+        method: 'get'
+      })
+      this.rank = rankRes.data.data
+    },
     toContinue () {
       this.interval = setInterval(() => {
         this.preLyric = this.curLyric

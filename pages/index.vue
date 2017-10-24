@@ -69,7 +69,7 @@ export default {
             }
           })
           wx.config(res.data.data)
-          wx.ready(function () {
+          wx.ready( () => {
             config.auth = true
             if (chorus._id && this.$route.path !== '/share') {
               this.$router.push({ path: '/share', query: { chorusId: chorus._id } })

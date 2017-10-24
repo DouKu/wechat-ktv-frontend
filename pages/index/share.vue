@@ -74,98 +74,30 @@ export default {
     }
   },
   async mounted () {
-    const openid = window.localStorage.getItem('openid')
-    if (!openid && !dev) {
-      this.$router.push({ path: '/', query: { redirect: '/share' } })
-      return
+    const wx = window.wx
+    if (!config.auth && this.$route.path === '/share') {
+      const res = await axios.request({
+        url: `${config.baseUrl}/api/wechat/getJSConfig`,
+        method: 'get',
+        params: {
+          url: window.location.href
+        }
+      })
+      wx.config(res.data.data)
+      wx.ready(() => {
+        this.init()
+        config.auth = true
+        console.log('config success')// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+      })
+      wx.error(function (res) {
+        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+        console.log('wx jsapi err:', res)
+      })
     }
-    if (!this.$route.query.chorusId && !dev) {
-      this.$router.push('/rule')
-      return
-    }
-    this.chorusId = this.$route.query.chorusId
-    const res = await axios.request({
-      url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
-      method: 'get'
-    })
-    this.chorus = res.data.data
-    this.preUrl = this.chorus.audio.url
-    this.finalUrl = this.chorus.recordUrl
-    this.progressNum = res.data.data.users.length || 1
-    this.$refs.preAudio.src = this.preUrl
-    this.$refs.afterAudio.src = this.finalUrl
-    const len = 5 - this.chorus.users.length
-    if (len > 0) {
-      for (let i = 0; i < len; i++) {
-        this.chorus.users.push({
-          user: {
-            headimgurl: userImg,
-            nickname: '未加入'
-          }
-        })
-      }
-    }
-    this.chorus.users.forEach(item => {
-      if (item.user.openid === openid) {
-        this.toJoinFlag = false
-      }
-    })
-    if (config.dev) {
-      this.toJoinFlag = true
-    }
-    this.settingShare()
   },
   methods: {
-    toContinue () {
-      this.$refs.afterAudio.play()
-      this.audioIndex = 2
-    },
-    toPlay () {
-      this.status = true
-      if (this.audioIndex === 1) {
-        this.$refs.preAudio.play()
-      } else {
-        this.$refs.afterAudio.play()
-      }
-    },
-    toStop () {
-      this.status = false
-      if (this.audioIndex === 1) {
-        this.$refs.preAudio.pause()
-      } else {
-        this.$refs.afterAudio.pause()
-      }
-    },
-    toJoin () {
-      this.$router.push({ path: '/personal', query: { chorusId: this.chorusId, musicId: this.chorus.audio._id } })
-    },
-    preAudioEnd () {
-      this.showTip = true
-    },
-    afterAudioEnd () {
-      this.status = false
-      this.audioIndex = 1
-    },
-    async settingShare () {
+    async init () {
       const wx = window.wx
-      if (!config.auth && this.$route.path === '/share') {
-        const res = await axios.request({
-          url: `${config.baseUrl}/api/wechat/getJSConfig`,
-          method: 'get',
-          params: {
-            url: window.location.href
-          }
-        })
-        wx.config(res.data.data)
-        wx.ready(function () {
-          config.auth = true
-          console.log('config success')// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-        })
-        wx.error(function (res) {
-          // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-          console.log('wx jsapi err:', res)
-        })
-      }
       wx.onMenuShareTimeline({
         title: `广州美莱周年庆`, // 分享标题
         desc: `我在广州美莱周年庆ktv中获得${this.chorus.totalScore}分`, // 分享描述
@@ -197,6 +129,75 @@ export default {
           // 用户取消分享后执行的回调函数
         }
       })
+      const openid = window.localStorage.getItem('openid')
+      if (!openid && !dev) {
+        this.$router.push({ path: '/', query: { redirect: '/share' } })
+        return
+      }
+      if (!this.$route.query.chorusId && !dev) {
+        this.$router.push('/rule')
+        return
+      }
+      this.chorusId = this.$route.query.chorusId
+      const res = await axios.request({
+        url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
+        method: 'get'
+      })
+      this.chorus = res.data.data
+      this.preUrl = this.chorus.audio.url
+      this.finalUrl = this.chorus.recordUrl
+      this.progressNum = res.data.data.users.length || 1
+      this.$refs.preAudio.src = this.preUrl
+      this.$refs.afterAudio.src = this.finalUrl
+      const len = 5 - this.chorus.users.length
+      if (len > 0) {
+        for (let i = 0; i < len; i++) {
+          this.chorus.users.push({
+            user: {
+              headimgurl: userImg,
+              nickname: '未加入'
+            }
+          })
+        }
+      }
+      this.chorus.users.forEach(item => {
+        if (item.user.openid === openid) {
+          this.toJoinFlag = false
+        }
+      })
+      if (config.dev) {
+        this.toJoinFlag = true
+      }
+    },
+    toContinue () {
+      this.$refs.afterAudio.play()
+      this.audioIndex = 2
+    },
+    toPlay () {
+      this.status = true
+      if (this.audioIndex === 1) {
+        this.$refs.preAudio.play()
+      } else {
+        this.$refs.afterAudio.play()
+      }
+    },
+    toStop () {
+      this.status = false
+      if (this.audioIndex === 1) {
+        this.$refs.preAudio.pause()
+      } else {
+        this.$refs.afterAudio.pause()
+      }
+    },
+    toJoin () {
+      this.$router.push({ path: '/personal', query: { chorusId: this.chorusId, musicId: this.chorus.audio._id } })
+    },
+    preAudioEnd () {
+      this.showTip = true
+    },
+    afterAudioEnd () {
+      this.status = false
+      this.audioIndex = 1
     },
     toShareFriend () {
       this.showModel = true
