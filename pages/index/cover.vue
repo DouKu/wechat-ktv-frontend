@@ -7,7 +7,6 @@
 
 <script>
 import config from '../config'
-import axios from 'axios'
 const dev = config.dev
 export default {
   async mounted () {

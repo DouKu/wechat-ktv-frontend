@@ -32,7 +32,6 @@
 import axios from 'axios'
 import config from '../config'
 import popupSelect from '../../components/popup-select.vue'
-const dev = config.dev
 
 export default {
   methods: {
