@@ -29,6 +29,7 @@
     <div class="w-btn-container">
       <div class="w-btn-item" @click="startRecordFull">{{recorded ? '重新录制' : chorusId ? '加入录制' : '开始录制'}}</div>
       <div class="w-btn-item" @click="toFinish">完成</div>
+      <div class="w-btn-item" @click="stopRecord">停止录音</div>
     </div>
     <div class="w-users-container">
       <div class="w-users-outline-box w-users-outline-box-left">
@@ -249,7 +250,8 @@ export default {
       this.$refs.preAudio.play()
     },
     startRecordFull () {
-      this.startPreVoice()
+      // this.startPreVoice()
+      this.startRecord()
     },
     startRecord () {
       this.recorded = false
