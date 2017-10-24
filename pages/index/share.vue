@@ -148,7 +148,7 @@ export default {
     },
     async settingShare () {
       const wx = window.wx
-      if (!config.auth) {
+      if (!config.auth && this.$route.path === '/share') {
         const res = await axios.request({
           url: `${config.baseUrl}/api/wechat/getJSConfig`,
           method: 'get',

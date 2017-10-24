@@ -14,7 +14,7 @@ export default {
     if (!window.localStorage.getItem('openid') && !dev) {
       this.$router.push({ path: '/', query: { redirect: '/cover' } })
     }
-    if (!config.auth) {
+    if (!config.auth && this.$route.path === '/cover') {
       const wx = window.wx
       const wechat = await axios.request({
         url: `${config.baseUrl}/api/wechat/getJSConfig`,

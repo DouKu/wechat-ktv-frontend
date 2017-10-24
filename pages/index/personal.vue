@@ -143,7 +143,7 @@ export default {
       this.$router.push({ path: '/', query: { redirect: '/personal' } })
       return
     }
-    if (!config.auth) {
+    if (!config.auth && this.$route.path === '/personal') {
       const wx = window.wx
       const wechat = await axios.request({
         url: `${config.baseUrl}/api/wechat/getJSConfig`,
