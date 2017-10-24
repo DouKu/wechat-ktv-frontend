@@ -260,7 +260,7 @@ export default {
       setTimeout(() => {
         this.firstRecord = false
         this.stopRecord()
-      }, 15000)
+      }, 20000)
     },
     tryListen () {
       this.status = true
