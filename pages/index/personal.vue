@@ -63,6 +63,7 @@
         </div>
       </div>
     </div>
+    <model v-model="showTip" @selectSong="toContinue"></model>
     <toast :text="toastText" :show="showToast"></toast>
   </div>
 </template>
@@ -71,6 +72,7 @@
 import axios from 'axios'
 import config from '../config'
 import toast from '../../components/toast.vue'
+import model from '../../components/model'
 import { dateFormat } from '../../utils'
 const dev = config.dev
 
@@ -113,6 +115,7 @@ export default {
   },
   data () {
     return {
+      showTip: true,
       progressNum: 0,
       rank: [],
       preLyric: '',
@@ -219,13 +222,16 @@ export default {
     }
   },
   methods: {
+    toContinue () {
+      this.$refs.afterAudio.play()
+    },
     preAudioEnd () {
       if (!this.chorusId && !this.localId) {
         this.startRecord()
       } else if (!this.chorusId && this.localId) {
         this.playLoaclVoice()
       } else {
-        this.$refs.afterAudio.play()
+        this.showTip = true
       }
     },
     afterAudioEnd () {
@@ -332,7 +338,8 @@ export default {
     }
   },
   components: {
-    toast
+    toast,
+    model
   }
 }
 </script>
