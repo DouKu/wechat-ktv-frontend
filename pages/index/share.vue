@@ -110,6 +110,9 @@ export default {
         this.toJoinFlag = false
       }
     })
+    if (config.dev) {
+      this.toJoinFlag = true
+    }
     this.settingShare()
   },
   methods: {
