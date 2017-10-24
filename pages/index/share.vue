@@ -66,6 +66,11 @@ export default {
       this.$refs.afterAudio.src = val
     }
   },
+  computed: {
+    progress () {
+      return 'w-dick-progress-background-' + (this.progressNum + 1)
+    }
+  },
   async mounted () {
     const openid = window.localStorage.getItem('openid')
     if (!openid && !dev) {
@@ -172,11 +177,6 @@ export default {
           // 用户取消分享后执行的回调函数
         }
       })
-    },
-    computed: {
-      progress () {
-        return 'w-dick-progress-background-' + (this.progressNum + 1)
-      }
     },
     toShareFriend () {
       this.showModel = true
