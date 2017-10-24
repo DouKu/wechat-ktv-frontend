@@ -79,7 +79,7 @@ export default {
       url: `${config.baseUrl}/api/wechat/getJSConfig`,
       method: 'get',
       params: {
-        url: window.location.href
+        url: encodeURIComponent(window.location.href)
       }
     })
     wx.config(res.data.data)
