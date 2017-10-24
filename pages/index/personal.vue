@@ -21,7 +21,7 @@
       </div> -->
     </div>
     <div class="w-lryic-container">
-      <h2>曲目: 死了都要爱</h2>
+      <h2>曲目: {{musicName}}</h2>
       <h3 class="w-current-lryic">{{curLyric}}</h3>
       <h3>{{nextOneLyric}}</h3>
       <h3>{{nextTowLyric}}</h3>
@@ -131,31 +131,17 @@ export default {
       second: 0,
       index: 0,
       times: [0, 5, 7, 10, 12, 15],
-      lyrics: [
-        '死了都要爱',
-        '不淋漓尽致不痛快',
-        '发会雪白, 土会掩埋',
-        '思念不腐坏',
-        '到绝路都要爱',
-        '不哭到浪漫不痛快',
-        '...',
-        'end'
-      ]
+      lyrics: [],
+      musicName: '',
+      interval: 0,
+      userNum: 1,
+      timeout: 0
     }
   },
   async mounted () {
     if (!window.localStorage.getItem('openid') && !dev) {
       this.$router.push({ path: '/', query: { redirect: '/personal' } })
       return
-    }
-    if (this.$route.query.musicId) {
-      const res = await axios.request({
-        url: `${config.baseUrl}/api/auth/audio/${this.$route.query.musicId}`,
-        method: 'get'
-      })
-      this.currentMusic = res.data.data
-    } else {
-      this.$router.push('/rule')
     }
     if (!config.auth) {
       const wx = window.wx
@@ -206,11 +192,23 @@ export default {
       })
       config.auth = true
     }
-    const rankRes = await axios.request({
-      url: `${config.baseUrl}/api/auth/chorus/rank`,
-      method: 'get'
-    })
-    this.rank = rankRes.data.data
+    if (this.$route.query.musicId) {
+      const res = await axios.request({
+        url: `${config.baseUrl}/api/auth/audio/${this.$route.query.musicId}`,
+        method: 'get'
+      })
+      this.currentMusic = res.data.data
+      this.musicName = res.data.data.name
+      this.lyrics = [...res.data.data.lyric, '...', 'END']
+      this.times = res.data.data.secondes
+      this.parLen = res.data.data.parLen
+      for (let i = 0; i < this.userNum + 1; i++) {
+        this.timeout = this.timeout + parseInt(this.parLen[i])
+      }
+      console.log(this.timeout)
+    } else {
+      this.$router.push('/rule')
+    }
     if (this.$route.query.chorusId) {
       this.chorusId = this.$route.query.chorusId
       const res = await axios.request({
@@ -221,9 +219,22 @@ export default {
       this.currentMusic = res.data.data.audio
       this.finalUrl = res.data.data.recordUrl
     }
+    const rankRes = await axios.request({
+      url: `${config.baseUrl}/api/auth/chorus/rank`,
+      method: 'get'
+    })
+    this.rank = rankRes.data.data
   },
   methods: {
     toContinue () {
+      this.interval = setInterval(() => {
+        this.preLyric = this.curLyric
+        ++this.second
+        console.log(this.second)
+        if (this.second === this.timeout) {
+          clearInterval(this.interval)
+        }
+      }, 1000)
       this.$refs.afterAudio.play()
     },
     preAudioEnd () {
@@ -233,6 +244,7 @@ export default {
         this.playLoaclVoice()
       } else {
         this.showTip = true
+        clearInterval(this.interval)
         if (this.status) {
           this.audioIndex = 2
         }
@@ -249,12 +261,12 @@ export default {
     startPreVoice () {
       this.second = 0
       this.index = 0
-      let interval = setInterval(() => {
+      this.interval = setInterval(() => {
         this.preLyric = this.curLyric
         ++this.second
         console.log(this.second)
-        if (this.second === 15) {
-          clearInterval(interval)
+        if (this.second === this.timeout) {
+          clearInterval(this.interval)
         }
       }, 1000)
       this.$refs.preAudio.play()
