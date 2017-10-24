@@ -4,13 +4,13 @@
     <audio ref="afterAudio" :src="finalUrl" @ended="afterAudioEnd" preload="true"></audio>
     <img class="w-theme-show" src="~assets/images/personal/theme.png"></img>
     <div class="w-dick-container">
-      <div class="w-dick-progress">
+      <div :class="['w-dick-progress', progress]">
         <img :class="['w-song-image', { rotation: status }]" src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg">
           <template v-if="!status"><div class="w-action-btn w-action-btn-play" @click="toPlay"></div></template>
           <template v-else><div class="w-action-btn w-action-btn-pause" @click="toStop"></div></template>
         </img>
       </div>
-      <div class="w-dick-progress-icons-row">
+      <!-- <div class="w-dick-progress-icons-row">
         <div class="w-dick-progress-icon-lt"></div>
         <div class="w-dick-progress-icon-rt"></div>
       </div>
@@ -18,7 +18,7 @@
         <div class="w-dick-progress-icon-ct"></div>
         <div class="w-dick-progress-icon-lb"></div>
         <div class="w-dick-progress-icon-rb"></div>
-      </div>
+      </div> -->
     </div>
     <div class="w-score-container-share-share">
       <!-- <h1>您为这首歌曲贡献了<span>100</span>分</h1> -->
@@ -84,6 +84,7 @@ export default {
     this.chorus = res.data.data
     this.preUrl = this.chorus.audio.url
     this.finalUrl = this.chorus.recordUrl
+    this.progressNum = res.data.data.users.length
     this.$refs.preAudio.src = this.preUrl
     this.$refs.afterAudio.src = this.finalUrl
     const len = 5 - this.chorus.users.length
@@ -169,12 +170,18 @@ export default {
         }
       })
     },
+    computed: {
+      progress () {
+        return 'w-dick-progress-background-' + (this.progressNum + 1)
+      }
+    },
     toShareFriend () {
       this.showModel = true
     }
   },
   data () {
     return {
+      progressNum: 0,
       chorusId: '',
       chorus: {
         user: []
@@ -221,17 +228,34 @@ export default {
   background-repeat: no-repeat;
 }
 .w-dick-progress {
+  background-size: 100% 100%;
+  background-attachment: local;
+  background-position: center center;
+  background-repeat: no-repeat;
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   top: 96px;
   left: 136px;
-  width: 444px;
-  height: 444px;
-  border: 4px solid #f8b551;
-  box-shadow: -2px 0 5px #f8b551, 0 0 5px #f8b551, 2px 0 5px #f8b551, 0 2.5px 5px #f8b551;
+  width: 453px;
+  height: 453px;
   border-radius: 50%;
+}
+.w-dick-progress-background-1 {
+  background-image: url("~assets/images/progress/1.png");
+}
+.w-dick-progress-background-2 {
+  background-image: url("~assets/images/progress/2.png");
+}
+.w-dick-progress-background-3 {
+  background-image: url("~assets/images/progress/3.png");
+}
+.w-dick-progress-background-4 {
+  background-image: url("~assets/images/progress/4.png");
+}
+.w-dick-progress-background-5 {
+  background-image: url("~assets/images/progress/5.png");
 }
 
 .w-dick-progress-icons-row {

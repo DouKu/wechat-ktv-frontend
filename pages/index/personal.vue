@@ -4,13 +4,13 @@
     <audio ref="afterAudio" :src="finalUrl" @ended="afterAudioEnd" preload="true"></audio>
     <img class="w-theme-show" src="~assets/images/personal/theme.png"></img>
     <div class="w-dick-container">
-      <div class="w-dick-progress">
+      <div :class="['w-dick-progress', progress]">
         <img :class="['w-song-image', { rotation: status }]" src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg">
           <template v-if="!status"><div v-show="recorded" class="w-action-btn w-action-btn-play" @click="tryListen"></div></template>
           <template v-else><div v-show="recorded" class="w-action-btn w-action-btn-pause" @click="stopListen"></div></template>
         </img>
       </div>
-      <div class="w-dick-progress-icons-row">
+      <!-- <div class="w-dick-progress-icons-row">
         <div class="w-dick-progress-icon-lt"></div>
         <div class="w-dick-progress-icon-rt"></div>
       </div>
@@ -18,7 +18,7 @@
         <div class="w-dick-progress-icon-ct"></div>
         <div class="w-dick-progress-icon-lb"></div>
         <div class="w-dick-progress-icon-rb"></div>
-      </div>
+      </div> -->
     </div>
     <div class="w-lryic-container">
       <h2>曲目: 死了都要爱</h2>
@@ -57,6 +57,11 @@
     </div>
     <div class="w-score-container">
       <div class="w-score-title">排行榜</div>
+      <div class="w-score-items">
+        <div class="w-score-item" v-for="(item, index) in rank" :key="index">
+          <span class="w-rank-order">{{index+1}}.</span><span class="w-rank-username">{{item.users[0].user.nickname+"dfdfasdf"}}</span> ......... <span class="w-rank-score">{{item.totalScore}}分</span> ......... {{item.updateAt | dateFormat }}
+        </div>
+      </div>
     </div>
     <toast :text="toastText" :show="showToast"></toast>
   </div>
@@ -66,10 +71,19 @@
 import axios from 'axios'
 import config from '../config'
 import toast from '../../components/toast.vue'
+import { dateFormat } from '../../utils'
 const dev = config.dev
 
 export default {
+  filters: {
+    dateFormat (val) {
+      return dateFormat(val, 'MM月dd日')
+    }
+  },
   computed: {
+    progress () {
+      return 'w-dick-progress-background-' + (this.progressNum + 1)
+    },
     curLyric () {
       let next = this.lyrics[this.times.indexOf(this.second)]
       if (next) {
@@ -99,6 +113,8 @@ export default {
   },
   data () {
     return {
+      progressNum: 0,
+      rank: [],
       preLyric: '',
       chorusId: '',
       status: false,
@@ -137,12 +153,18 @@ export default {
     } else {
       this.$router.push('/rule')
     }
+    const rankRes = await axios.request({
+      url: `${config.baseUrl}/api/auth/chorus/rank`,
+      method: 'get'
+    })
+    this.rank = rankRes.data.data
     if (this.$route.query.chorusId) {
       this.chorusId = this.$route.query.chorusId
       const res = await axios.request({
         url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
         method: 'get'
       })
+      this.progressNum = res.data.data.users.length
       this.currentMusic = res.data.data.audio
       this.finalUrl = res.data.data.recordUrl
     }
@@ -297,19 +319,35 @@ export default {
   background-repeat: no-repeat;
 }
 .w-dick-progress {
+  background-size: 100% 100%;
+  background-attachment: local;
+  background-position: center center;
+  background-repeat: no-repeat;
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   top: 96px;
   left: 136px;
-  width: 444px;
-  height: 444px;
-  border: 4px solid #f8b551;
-  box-shadow: -2px 0 5px #f8b551, 0 0 5px #f8b551, 2px 0 5px #f8b551, 0 2.5px 5px #f8b551;
+  width: 453px;
+  height: 453px;
   border-radius: 50%;
 }
-
+.w-dick-progress-background-1 {
+  background-image: url("~assets/images/progress/1.png");
+}
+.w-dick-progress-background-2 {
+  background-image: url("~assets/images/progress/2.png");
+}
+.w-dick-progress-background-3 {
+  background-image: url("~assets/images/progress/3.png");
+}
+.w-dick-progress-background-4 {
+  background-image: url("~assets/images/progress/4.png");
+}
+.w-dick-progress-background-5 {
+  background-image: url("~assets/images/progress/5.png");
+}
 .w-dick-progress-icons-row {
   position: absolute;
   top: 276px;
@@ -537,7 +575,7 @@ export default {
   position: relative;
   top: -100px;
   margin: 0 auto;
-  width: 575px;
+  width: 600px;
   height: 640px;
   background-image: url("~assets/images/popup/background.png");
   background-size: 100% 100%;
@@ -554,6 +592,40 @@ export default {
 
 .rotation {
   animation: rotating 6s infinite linear;
+}
+
+.w-score-items {
+  margin-top: 30px;
+}
+.w-score-item {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 5px 30px;
+  font-size: 26px;
+}
+.w-score-item > .w-rank-username {
+  display: inline-block;
+  width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.w-score-item > .w-rank-score {
+  display: inline-block;
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  color: #931447;
+}
+.w-score-item > .w-rank-order {
+  position: relative;
+  top: 3px;
+  display: inline-block;
+  width: 30px;
+  overflow: hidden;
+  text-align: right;
 }
 
 @keyframes rotating {

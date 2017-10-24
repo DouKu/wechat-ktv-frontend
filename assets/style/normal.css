@@ -78,6 +78,6 @@ input::-webkit-input-speech-button {
 
 @media screen and (min-width: 600px) and (max-width: 800px) {
     .w-score-container {
-        top: -3.8rem !important;
+        top: -3.0rem !important;
     }
 }

@@ -149,7 +149,6 @@ export function dateFormat (date, format = '') {
     str = str.replace(/mm/g, minutes)
     str = str.replace(/ss/g, seconds)
   }
-
   return str
 }
 
