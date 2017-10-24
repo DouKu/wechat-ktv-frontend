@@ -115,7 +115,7 @@ export default {
   },
   data () {
     return {
-      showTip: true,
+      showTip: false,
       progressNum: 0,
       rank: [],
       preLyric: '',
