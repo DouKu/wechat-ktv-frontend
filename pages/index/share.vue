@@ -192,7 +192,8 @@ export default {
       }
     },
     toJoin () {
-      this.$router.push({ path: '/personal', query: { chorusId: this.chorusId, musicId: this.chorus.audio._id } })
+      window.location.href = `${config.redirectUrl}/share?chorusId=${this.chorusId}&musicId=${this.chorus.audio._id}`
+      // this.$router.push({ path: '/personal', query: { chorusId: this.chorusId, musicId: this.chorus.audio._id } })
     },
     preAudioEnd () {
       this.showTip = true
