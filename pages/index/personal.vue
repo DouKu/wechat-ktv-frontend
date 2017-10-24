@@ -233,7 +233,9 @@ export default {
         this.playLoaclVoice()
       } else {
         this.showTip = true
-        this.audioIndex = 2
+        if (this.status) {
+          this.audioIndex = 2
+        }
       }
     },
     afterAudioEnd () {
