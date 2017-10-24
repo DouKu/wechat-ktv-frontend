@@ -47,6 +47,7 @@
     </div>
     <img src="~assets/images/share/code.png" class="w-star-code"></img>
     <share-model v-model="showModel"></share-model>
+    <model v-model="showTip" @selectSong="toContinue"></model>
   </div>
 </template>
 
@@ -54,6 +55,7 @@
 import axios from 'axios'
 import config from '../config'
 import userImg from '../../assets/images/user.png'
+import model from '../../components/model'
 import shareModel from '../../components/share-model.vue'
 const dev = config.dev
 
@@ -111,9 +113,11 @@ export default {
     this.settingShare()
   },
   methods: {
+    toContinue () {
+      this.$refs.afterAudio.play()
+    },
     toPlay () {
       this.status = true
-      this.$refs.preAudio.play()
     },
     toStop () {
     },
@@ -121,7 +125,7 @@ export default {
       this.$router.push({ path: '/personal', query: { chorusId: this.chorusId, musicId: this.chorus.audio._id } })
     },
     preAudioEnd () {
-      this.$refs.afterAudio.play()
+      this.showTip = true
     },
     afterAudioEnd () {
       this.status = false
@@ -184,6 +188,7 @@ export default {
   },
   data () {
     return {
+      showTip: false,
       progressNum: 0,
       chorusId: '',
       chorus: {
@@ -197,7 +202,8 @@ export default {
     }
   },
   components: {
-    shareModel
+    shareModel,
+    model
   }
 }
 </script>
