@@ -118,6 +118,7 @@ export default {
     },
     toPlay () {
       this.status = true
+      this.$refs.preAudio.play()
     },
     toStop () {
     },
