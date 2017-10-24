@@ -281,11 +281,11 @@ export default {
     },
     stopListen () {
       this.status = false
-      if (this.audioIndex === 1) { 
+      if (this.audioIndex === 1) {
         this.$refs.preAudio.pause()
       } else if (this.audioIndex === 2) {
         this.$refs.afterAudio.pause()
-      } else if (this.audioIndex ===  3) {
+      } else if (this.audioIndex === 3) {
         this.pauseVoice()
       }
     },
