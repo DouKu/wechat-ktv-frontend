@@ -84,7 +84,7 @@ export default {
     this.chorus = res.data.data
     this.preUrl = this.chorus.audio.url
     this.finalUrl = this.chorus.recordUrl
-    this.progressNum = res.data.data.users.length
+    this.progressNum = res.data.data.users.length || 1
     this.$refs.preAudio.src = this.preUrl
     this.$refs.afterAudio.src = this.finalUrl
     const len = 5 - this.chorus.users.length
