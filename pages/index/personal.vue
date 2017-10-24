@@ -152,7 +152,8 @@ export default {
       wx.ready(() => {
         config.auth = true
         if (!window.localStorage.getItem('openid') && !dev) {
-          this.$router.push({ path: '/', query: { redirect: '/personal' } })
+          window.location.href = `${config.redirectUrl}?redirect=personal`
+          // this.$router.push({ path: '/', query: { redirect: '/personal' } })
           return
         }
         this.init()
@@ -213,7 +214,8 @@ export default {
         }
         console.log(this.timeout)
       } else {
-        this.$router.push('/rule')
+        window.location.href = `${config.redirectUrl}/rule`
+        // this.$router.push('/rule')
       }
       if (this.$route.query.chorusId) {
         this.chorusId = this.$route.query.chorusId
@@ -361,7 +363,8 @@ export default {
                 openid: localStorage.getItem('openid')
               }
             })
-            this.$router.push({ path: '/share', query: { chorusId: _res.data.data.chorusId } })
+            window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}`
+            // this.$router.push({ path: '/share', query: { chorusId: _res.data.data.chorusId } })
           } else {
             const _res = await axios.request({
               url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
@@ -372,7 +375,8 @@ export default {
                 openid: localStorage.getItem('openid')
               }
             })
-            this.$router.push({ path: '/share', query: { chorusId: _res.data.data.chorusId } })
+            window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}`
+            // this.$router.push({ path: '/share', query: { chorusId: _res.data.data.chorusId } })
           }
         }
       })

@@ -45,8 +45,9 @@ export default {
             }
           })
           window.localStorage.setItem('openid', res.data.data.openid)
-          const redirect = window.localStorage.getItem('redirect') || '/cover'
-          this.$router.push(redirect)
+          const redirect = window.localStorage.getItem('redirect') || 'cover'
+          window.location.href = `${config.redirectUrl}/${redirect}`
+          // this.$router.push(redirect)
         } catch (error) {
         }
       } else {
@@ -72,11 +73,13 @@ export default {
           wx.ready( () => {
             config.auth = true
             if (chorus._id && this.$route.path !== '/share') {
-              this.$router.push({ path: '/share', query: { chorusId: chorus._id } })
+              window.location.href = `${config.redirectUrl}/share?chorusId=${chorus._id}`
+              // this.$router.push({ path: '/share', query: { chorusId: chorus._id } })
               return
             }
             if (this.$route.path === '/') {
-              this.$router.push('/cover')
+              window.location.href = `${config.redirectUrl}/cover`
+              // this.$router.push('/cover')
             }
             console.log('config success')// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
           })

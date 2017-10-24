@@ -101,11 +101,13 @@ export default {
     async init () {
       const openid = window.localStorage.getItem('openid')
       if (!openid && !dev) {
-        this.$router.push({ path: '/', query: { redirect: '/share' } })
+        window.location.href = `${config.redirectUrl}?redirect=share`
+        // this.$router.push({ path: '/', query: { redirect: '/share' } })
         return
       }
       if (!this.$route.query.chorusId && !dev) {
-        this.$router.push('/rule')
+        window.location.href = `${config.redirectUrl}/rule`
+        // this.$router.push('/rule')
         return
       }
       this.chorusId = this.$route.query.chorusId

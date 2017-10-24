@@ -89,7 +89,8 @@ export default {
           }
         })
       }
-      this.$router.push({ path: '/personal', query: { musicId: item._id } })
+      window.location.href = `${config.redirectUrl}/personal?musicId=${item._id}`
+      // this.$router.push({ path: '/personal', query: { musicId: item._id } })
     }
   },
   async mounted () {
@@ -106,7 +107,8 @@ export default {
       wx.ready(() => {
         config.auth = true
         if (!window.localStorage.getItem('openid') && !dev) {
-          this.$router.push({ path: '/', query: { redirect: '/rule' } })
+          window.location.href = `${config.redirectUrl}?redirect=rule`
+          // this.$router.push({ path: '/', query: { redirect: '/rule' } })
           return
         }
         this.init()
