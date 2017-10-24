@@ -115,12 +115,23 @@ export default {
   methods: {
     toContinue () {
       this.$refs.afterAudio.play()
+      this.audioIndex = 2
     },
     toPlay () {
       this.status = true
-      this.$refs.preAudio.play()
+      if (this.audioIndex === 1) {
+        this.$refs.preAudio.play()
+      } else {
+        this.$refs.afterAudio.play()
+      }
     },
     toStop () {
+      this.status = false
+      if (this.audioIndex === 1) {
+        this.$refs.preAudio.pause()
+      } else {
+        this.$refs.afterAudio.pause()
+      }
     },
     toJoin () {
       this.$router.push({ path: '/personal', query: { chorusId: this.chorusId, musicId: this.chorus.audio._id } })
@@ -130,6 +141,7 @@ export default {
     },
     afterAudioEnd () {
       this.status = false
+      this.audioIndex = 1
     },
     async settingShare () {
       const wx = window.wx
@@ -189,6 +201,7 @@ export default {
   },
   data () {
     return {
+      audioIndex: 1,
       showTip: false,
       progressNum: 0,
       chorusId: '',

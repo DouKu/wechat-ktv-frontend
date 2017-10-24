@@ -115,6 +115,7 @@ export default {
   },
   data () {
     return {
+      audioIndex: 1,
       showTip: false,
       progressNum: 0,
       rank: [],
@@ -232,10 +233,12 @@ export default {
         this.playLoaclVoice()
       } else {
         this.showTip = true
+        this.audioIndex = 2
       }
     },
     afterAudioEnd () {
       if (this.status) {
+        this.audioIndex = 3
         this.playLoaclVoice()
         return
       }
@@ -268,10 +271,23 @@ export default {
     },
     tryListen () {
       this.status = true
-      this.startPreVoice()
+      if (this.audioIndex === 1) {
+        this.$refs.preAudio.play()
+      } else if (this.audioIndex === 2) {
+        this.$refs.afterAudio.play()
+      } else if (this.audioIndex === 3) {
+        this.playLoaclVoice()
+      }
     },
     stopListen () {
       this.status = false
+      if (this.audioIndex === 1) { 
+        this.$refs.preAudio.pause()
+      } else if (this.audioIndex === 2) {
+        this.$refs.afterAudio.pause()
+      } else if (this.audioIndex ===  3) {
+        this.pauseVoice()
+      }
     },
     stopRecord () {
       const wx = window.wx
@@ -291,6 +307,12 @@ export default {
         return
       }
       this.uploadVoice()
+    },
+    pauseVoice () {
+      const wx = window.wx
+      wx.pauseVoice({
+        localId: this.localId // 需要暂停的音频的本地ID，由stopRecord接口获得
+      })
     },
     playLoaclVoice () {
       const wx = window.wx
