@@ -338,8 +338,7 @@ export default {
                 openid: localStorage.getItem('openid')
               }
             })
-            window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}`
-            // this.$router.push({ path: '/share', query: { chorusId: _res.data.data.chorusId } })
+            window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}&openid=${window.localStorage.getItem('openid')}`
           } else {
             const _res = await axios.request({
               url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
@@ -350,8 +349,7 @@ export default {
                 openid: localStorage.getItem('openid')
               }
             })
-            window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}`
-            // this.$router.push({ path: '/share', query: { chorusId: _res.data.data.chorusId } })
+            window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}&openid=${window.localStorage.getItem('openid')}`
           }
         }
       })
