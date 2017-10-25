@@ -142,12 +142,13 @@ export default {
   background-repeat: no-repeat;
   background-attachment: fixed;
   overflow: auto;
-  min-height: 1200px;
 }
 .w-rule-img {
   width: 100%;
 }
 .w-rule-detail {
+  position: relative;
+  top: -50px;
   margin: 0 12%;
   box-sizing: border-box;
   width: 590px;
@@ -156,7 +157,7 @@ export default {
   color: #ffffff;
 }
 .w-rule-item {
-  margin: 29px 0;
+  margin: 10px 0;
   line-height: 35px;
 }
 .w-rule-item-deep {
@@ -186,10 +187,14 @@ export default {
   content: "④";
 }
 .w-virtual-line {
+  position: relative;
+  top: -50px;
   margin: 0 45px;
   border: 1px dashed #ffffff;
 }
 .w-input-container {
+  position: relative;
+  top: -50px;
   height: 160px;
   display: flex;
   flex-direction: column;
@@ -233,7 +238,7 @@ export default {
   color: red;
 }
 .w-start-btn {
-  top: 40px;
+  top: -10px;
   position: relative;
   margin: 0 auto;
   width: 360px;
@@ -242,7 +247,6 @@ export default {
   line-height: 120px;
   text-align: center;
   color: #ffb5ff;
-  margin-bottom: 25px;
   background-image: url("~assets/images/pink-btn.png");
   background-repeat: no-repeat;
   background-size: cover;

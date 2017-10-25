@@ -57,3 +57,13 @@ input::-webkit-input-speech-button {
     height: 0;
     color: transparent;
 }
+
+@media screen and (max-width: 330px) {
+    .w-rule-detail {
+        font-size: .25rem !important;
+    }
+    .w-rule-item {
+        margin: 0 !important;
+        line-height: .44rem !important;
+    }
+}
