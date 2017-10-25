@@ -5,7 +5,7 @@
     <img class="w-theme-show" src="~assets/images/personal/theme.png"></img>
     <div class="w-dick-container">
       <div :class="['w-dick-progress', progress]">
-        <img :class="['w-song-image', { rotation: status }]" src="http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg">
+        <img :class="['w-song-image', { rotation: status }]" src="~assets/images/xin.png">
           <template v-if="!status"><div class="w-action-btn w-action-btn-play" @click="toPlay"></div></template>
           <template v-else><div class="w-action-btn w-action-btn-pause" @click="toStop"></div></template>
         </img>
