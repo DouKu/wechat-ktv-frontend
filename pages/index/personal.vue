@@ -616,15 +616,17 @@ export default {
 .w-rules-container-outline {
   position: absolute;
   top: 56px;
-  width: 600px;
+  width: 100%;
   min-height: 950px;
   box-sizing: border-box;
   overflow: hidden;
 }
 .w-rules-container {
   position: absolute;
+  margin: auto;
   display: flex;
-  left: 8px;
+  left: 0px;
+  right: 0px;
   height: auto;
   width: 586px;
   box-sizing: border-box;
