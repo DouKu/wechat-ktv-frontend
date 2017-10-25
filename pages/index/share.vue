@@ -450,7 +450,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
-  top: 100px;
+  top: 120px;
   left: 0;
   right: 0;
   margin: auto;
