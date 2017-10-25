@@ -16,14 +16,18 @@ export default {
       return
     }
     const wx = window.wx
-    const wechat = await axios.request({
-      url: `${config.baseUrl}/api/wechat/getJSConfig`,
-      method: 'get',
-      params: {
-        url: window.location.href
-      }
-    })
-    wx.config(wechat.data.data)
+    if (!config.auth) {
+      const wechat = await axios.request({
+        url: `${config.baseUrl}/api/wechat/getJSConfig`,
+        method: 'get',
+        params: {
+          url: window.location.href
+        }
+      })
+  
+      wx.config(wechat.data.data)
+      config.auth = true
+    }
     wx.ready(() => {
       config.auth = true
       wx.onMenuShareTimeline({
