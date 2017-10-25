@@ -169,6 +169,8 @@ export default {
       })
       if (openid === this.shareOpenId) {
         this.self = true
+      } else if (openid === this.chorus.users[0].user.openid) {
+        this.self = true
       } else {
         this.self = false
       }
