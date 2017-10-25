@@ -11,7 +11,7 @@
         </img>
       </div>
     </div>
-    <div class="w-score-container-share-share">
+    <div class="w-score-container-share">
       <!-- <h1>您为这首歌曲贡献了<span>100</span>分</h1> -->
       <h1>您的歌曲获得了<span>{{chorus.totalScore}}</span>高分</h1>
       <h1>超过了100%的K歌之王</h1>
@@ -19,7 +19,7 @@
     <div class="w-users-container">
       <div class="w-users-outline-box w-users-outline-box-left">
         <div class="w-users-outline w-users-outline-left"></div>
-      </div>
+      </div>  
       <div class="w-users-outline-title">帮帮唱团友</div>
       <div class="w-users-outline-box w-users-outline-box-right">
         <div class="w-users-outline w-users-outline-right"></div>
@@ -353,13 +353,13 @@ export default {
   background-image: url("~assets/images/personal/pause.png");
 }
 
-.w-score-container-share-share {
+.w-score-container-share {
   position: relative;
   top: -20px;
   width: 100%;
   height: 50px;
 }
-.w-score-container-share-share h1 {
+.w-score-container-share h1 {
   text-align: center;
   margin: 0 0;
   font-size: 30px;
@@ -402,6 +402,7 @@ export default {
 }
 .w-users-outline-title {
   position: absolute;
+  margin: auto;
   top: -10px;
   height: 50px;
   box-sizing: border-box;
