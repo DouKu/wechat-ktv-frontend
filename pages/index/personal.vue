@@ -10,15 +10,6 @@
           <template v-else><div v-show="recorded" class="w-action-btn w-action-btn-pause" @click="stopListen"></div></template>
         </img>
       </div>
-      <!-- <div class="w-dick-progress-icons-row">
-        <div class="w-dick-progress-icon-lt"></div>
-        <div class="w-dick-progress-icon-rt"></div>
-      </div>
-      <div class="w-dick-progress-icons-column">
-        <div class="w-dick-progress-icon-ct"></div>
-        <div class="w-dick-progress-icon-lb"></div>
-        <div class="w-dick-progress-icon-rb"></div>
-      </div> -->
     </div>
     <div class="w-lryic-container">
       <h2>曲目: {{musicName}}</h2>
@@ -31,28 +22,18 @@
       <div class="w-btn-item" @click="toFinish">完成</div>
     </div>
     <div class="w-users-container">
-      <div class="w-users-outline-box w-users-outline-box-left">
-        <div class="w-users-outline w-users-outline-left"></div>
-      </div>
       <div class="w-users-outline-title">活动规则</div>
-      <div class="w-users-outline-box w-users-outline-box-right">
-        <div class="w-users-outline w-users-outline-right"></div>
-      </div>
-      <div class="w-rules-container-outline">
-        <div class="w-rules-container">
-          <div class="w-rule-detail">
-            <p class="w-rule-item w-rule-one" style="margin-top: 0px;">用户开始游戏后，录制明星信的经典歌曲，可获得一定的评分；邀请三位好友前来帮帮唱，组成完整歌曲即可获得团队分数。</p>
-            <p class="w-rule-item w-rule-two" style="margin-bottom: 0px;">活动结束后，团队分数排名最高前49名可获得周年庆盛典丰厚礼品，中奖名单在广州美莱公众号(微信号:dgmylike)公布。</p>
-            <p class="w-rule-item-deep"><span>特等奖：</span>30日周年庆盛典入场名额2名，与信面对面(前2名)</p>
-            <p class="w-rule-item-deep"><span>一等奖：</span>爱马仕香水50ml 2名（第3-4名）</p>
-            <p class="w-rule-item-deep"><span>二等奖：</span>兰芝护唇膏 5名（第5-9名）</p>
-            <p class="w-rule-item-deep"><span>三等奖：</span>玻尿酸润白导入体验券 10名（第10-19名）</p>
-            <p class="w-rule-item-deep"><span>四等奖：</span>专业护理妮斯面膜 10名（第20-29名）</p>
-            <p class="w-rule-item-deep"><span>五等奖：</span>专业护理手膜 20名（第30-49名）</p>
-            <p class="w-rule-item w-rule-three">用户在获奖名单公布后，凭姓名和手机号码到本院1楼前台领取，领取时间截止至2017年11月30日12:00，逾期不候。</p>
-            <p class="w-rule-item w-rule-four">本次活动最终解释权归广州美莱医疗美容医院所有。</p>
-          </div>
-        </div>
+      <div class="w-rule-detail">
+        <p class="w-rule-item w-rule-one" style="margin-top: 0px;">用户开始游戏后，录制明星信的经典歌曲，可获得一定的评分；邀请三位好友前来帮帮唱，组成完整歌曲即可获得团队分数。</p>
+        <p class="w-rule-item w-rule-two" style="margin-bottom: 0px;">活动结束后，团队分数排名最高前49名可获得周年庆盛典丰厚礼品，中奖名单在广州美莱公众号(微信号:dgmylike)公布。</p>
+        <p class="w-rule-item-deep"><span>特等奖：</span>30日周年庆盛典入场名额2名，与信面对面(前2名)</p>
+        <p class="w-rule-item-deep"><span>一等奖：</span>爱马仕香水50ml 2名（第3-4名）</p>
+        <p class="w-rule-item-deep"><span>二等奖：</span>兰芝护唇膏 5名（第5-9名）</p>
+        <p class="w-rule-item-deep"><span>三等奖：</span>玻尿酸润白导入体验券 10名（第10-19名）</p>
+        <p class="w-rule-item-deep"><span>四等奖：</span>专业护理妮斯面膜 10名（第20-29名）</p>
+        <p class="w-rule-item-deep"><span>五等奖：</span>专业护理手膜 20名（第30-49名）</p>
+        <p class="w-rule-item w-rule-three">用户在获奖名单公布后，凭姓名和手机号码到本院1楼前台领取，领取时间截止至2017年11月30日12:00，逾期不候。</p>
+        <p class="w-rule-item w-rule-four">本次活动最终解释权归广州美莱医疗美容医院所有。</p>
       </div>
     </div>
     <div class="w-score-container">
@@ -570,71 +551,26 @@ export default {
 .w-users-container {
   position: relative;
   top: -50px;
+  width: 85%;
+  margin: 0 auto;
+  padding: 20px 30px;
   display: flex;
-  width: 100%;
-  min-height: 1000px;
-  justify-content: center;
-}
-.w-users-outline-box {
-  position: absolute;
-  top: 0;
-  height: 60px;
-  width: 175px;
-  overflow: hidden;
-}
-.w-users-outline-box-left {
-  left: 60px;
-}
-.w-users-outline-box-right {
-  right: 60px;
-}
-.w-users-outline {
-  position: absolute;
-  top: 10px;
-  width: 500px;
-  height: 200px;  
-  border: 5px solid #e0d6fe;
-  box-shadow: -5px 0 15px #313777, 0 0 15px #313777, 8px 0 15px #313777, 0 5px 15px #313777;
-  border-radius: 60px;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('~assets/images/rule.png');
+  background-size: 100% 100%;
+  background-attachment: local;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 .w-users-outline-title {
-  position: absolute;
+  position: relative;
   top: -10px;
   height: 50px;
-  box-sizing: border-box;
   font-size: 42px;
   line-height: 50px;
   color: #e0d6fe;
   text-shadow: -5px 0 15px #313777, 0 0 15px #313777, 8px 0 15px #313777, 0 5px 15px #313777;
-}
-.w-users-outline-left {
-  left: 5px;
-}
-.w-users-outline-right {
-  right: 5px;
-}
-.w-rules-container-outline {
-  position: absolute;
-  top: 56px;
-  width: 100%;
-  min-height: 950px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-.w-rules-container {
-  position: absolute;
-  margin: auto;
-  display: flex;
-  left: 0px;
-  right: 0px;
-  height: auto;
-  width: 586px;
-  box-sizing: border-box;
-  border-left: 5px solid #e0d6fe;
-  border-bottom: 5px solid #e0d6fe;
-  border-right: 5px solid #e0d6fe;
-  border-radius: 0 0 60px 60px;
-  box-shadow: -5px 0 30px #313777, 0 0 30px #313777, 0 0 30px #313777, 0 5.5px 30px #313777;
 }
 .w-rule-detail {
   margin-left: 48px;
@@ -676,7 +612,7 @@ export default {
 }
 .w-score-container {
   position: relative;
-  top: -100px;
+  top: -50px;
   margin: 0 auto;
   width: 600px;
   height: 640px;

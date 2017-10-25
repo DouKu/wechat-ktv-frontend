@@ -10,15 +10,6 @@
           <template v-else><div class="w-action-btn w-action-btn-pause" @click="toStop"></div></template>
         </img>
       </div>
-      <!-- <div class="w-dick-progress-icons-row">
-        <div class="w-dick-progress-icon-lt"></div>
-        <div class="w-dick-progress-icon-rt"></div>
-      </div>
-      <div class="w-dick-progress-icons-column">
-        <div class="w-dick-progress-icon-ct"></div>
-        <div class="w-dick-progress-icon-lb"></div>
-        <div class="w-dick-progress-icon-rb"></div>
-      </div> -->
     </div>
     <div class="w-score-container-share-share">
       <!-- <h1>您为这首歌曲贡献了<span>100</span>分</h1> -->
