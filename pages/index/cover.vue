@@ -16,7 +16,7 @@ export default {
       return
     }
     const wx = window.wx
-    if (!config.auth) {
+    if (!config.auth && this.$route.path === '/cover') {
       const wechat = await axios.request({
         url: `${config.baseUrl}/api/wechat/getJSConfig`,
         method: 'get',

@@ -126,7 +126,7 @@ export default {
     }
     this.init()
     const wx = window.wx
-    if (!config.auth) {
+    if (!config.auth && this.$route.path === '/personal') {
 
       const wechat = await axios.request({
         url: `${config.baseUrl}/api/wechat/getJSConfig`,
