@@ -373,10 +373,8 @@ export default {
 .w-users-container {
   position: relative;
   top: 50px;
-  display: flex;
   width: 100%;
   height: auto;
-  justify-content: center;
 }
 .w-users-outline-box {
   position: absolute;
@@ -401,8 +399,13 @@ export default {
   border-radius: 60px;
 }
 .w-users-outline-title {
+  display: inline;
+  width: 300px;
+  text-align: center;
   position: absolute;
   margin: auto;
+  left: 0;
+  right: 0;
   top: -10px;
   height: 50px;
   box-sizing: border-box;
