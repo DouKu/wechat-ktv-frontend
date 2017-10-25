@@ -171,6 +171,7 @@ export default {
         this.self = true
       } else if (openid === this.chorus.users[0].user.openid) {
         this.self = true
+        this.userScore = this.chorus.users[0].extendMessage.point
       } else {
         this.self = false
       }
