@@ -24,7 +24,6 @@ export default {
           url: window.location.href
         }
       })
-  
       wx.config(wechat.data.data)
       config.auth = true
     }

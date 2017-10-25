@@ -168,7 +168,11 @@ export default {
           this.userScore = item.extendMessage.point
         }
       })
-      this.self = openid === this.shareOpenId ? true : false
+      if (openid === this.shareOpenId) {
+        this.self = true
+      } else {
+        this.self = false
+      }
       if (config.dev) {
         this.toJoinFlag = true
       }
