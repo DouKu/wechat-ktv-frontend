@@ -271,6 +271,7 @@ export default {
     startRecord () {
       this.recorded = false
       const wx = window.wx
+      console.log(this.recordTime)
       wx.startRecord()
       setTimeout(() => {
         this.firstRecord = false
