@@ -260,12 +260,12 @@ export default {
         this.preLyric = this.curLyric
         ++this.second
         console.log(this.second)
-        if (this.second === (this.timeout - this.recordTime - 3)) {
+        if (this.second === (this.timeout - this.recordTime - 4)) {
           this.toastText = '接下来要轮到你录制啦'
           this.showToast = true
           setTimeout(() => {
             this.showToast = false
-          }, 1500)
+          }, 2000)
         }
         if (this.second === this.timeout) {
           clearInterval(this.interval)

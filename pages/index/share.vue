@@ -498,6 +498,7 @@ export default {
 .w-btn-container {
   position: relative;
   top: 90px;
+  flex-direction: column;
   height: 150px;
   display: flex;
   align-items: center;
@@ -511,7 +512,6 @@ export default {
   line-height: 120px;
   text-align: center;
   color: #ffb5ff;
-  margin-bottom: 25px;
   background-image: url("~assets/images/pink-btn.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -530,7 +530,7 @@ export default {
 
 .w-star-code {
   position: relative;
-  top: 100px;
+  top: 120px;
   width: 700px;
   height: 350px;
 }

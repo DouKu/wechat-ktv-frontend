@@ -25,12 +25,14 @@
     </div>
     <div class="w-start-btn" @click="toSelectSong">开始选歌<img src="~assets/images/play.png"></img></div>
     <popup-select :musics="musics" v-model="open" @selectSong="handleSelectSong"></popup-select>
+    <toast :text="toastText" :show="showToast"></toast>
   </div> 
 </template>
 
 <script>
 import axios from 'axios'
 import config from '../config'
+import toast from '../../components/toast.vue'
 import popupSelect from '../../components/popup-select.vue'
 const dev = config.dev
 
@@ -44,6 +46,30 @@ export default {
       this.musics = res.data.data
     },
     toSelectSong () {
+      if (!this.realname) {
+        this.toastText = '请填写您的姓名'
+        this.showToast = true
+        setTimeout(() => {
+          this.showToast = false
+        }, 1500)
+        return
+      }
+      if (!this.phoneNumber) {
+        this.toastText = '请填写您的手机号码'
+        this.showToast = true
+        setTimeout(() => {
+          this.showToast = false
+        }, 1500)
+        return
+      }
+      if (!/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.phoneNumber)) {
+        this.toastText = '请填写正确的手机号码'
+        this.showToast = true
+        setTimeout(() => {
+          this.showToast = false
+        }, 1500)
+        return
+      }
       this.open = true
     },
     async handleSelectSong (item) {
@@ -122,11 +148,14 @@ export default {
       open: false,
       musics: [],
       realname: '',
-      phoneNumber: ''
+      phoneNumber: '',
+      showToast: false,
+      toastText: ''
     }
   },
   components: {
-    popupSelect
+    popupSelect,
+    toast
   }
 }
 </script>
