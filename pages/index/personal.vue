@@ -117,7 +117,8 @@ export default {
       musicName: '',
       interval: 0,
       timeout: 0,
-      recordTime: 0
+      recordTime: 0,
+      toStartFlag: true
     }
   },
   async mounted () {
@@ -178,6 +179,17 @@ export default {
   },
   methods: {
     async init () {
+      // const _res = await axios.request({
+      //   url: `${config.baseUrl}/api/auth/chorus`,
+      //   method: 'get',
+      //   params: {
+      //     openid: localStorage.getItem('openid')
+      //   }
+      // })
+      // const chorus = _res.data.data
+      // if (chorus._id) {
+      //   this.toStartFlag = false
+      // }
       if (this.$route.query.musicId) {
         const res = await axios.request({
           url: `${config.baseUrl}/api/auth/audio/${this.$route.query.musicId}`,
