@@ -274,10 +274,10 @@ export default {
       this.$refs.preAudio.play()
     },
     startRecordFull () {
+      this.localId = null
       this.startPreVoice()
     },
     startRecord () {
-      this.localId = null
       this.recorded = false
       const wx = window.wx
       wx.startRecord()
