@@ -224,7 +224,7 @@ export default {
           this.showToast = true
           setTimeout(() => {
             this.showToast = false
-          }, 15000)
+          }, this.recordTime * 1000)
         }
         if (this.second === this.timeout) {
           clearInterval(this.interval)
@@ -259,6 +259,14 @@ export default {
       this.interval = setInterval(() => {
         this.preLyric = this.curLyric
         ++this.second
+        console.log(this.second)
+        if (this.second === (this.timeout - this.recordTime - 2)) {
+          this.toastText = '接下来要轮到你录制啦'
+          this.showToast = true
+          setTimeout(() => {
+            this.showToast = false
+          }, this.recordTime * 1000)
+        }
         if (this.second === this.timeout) {
           clearInterval(this.interval)
         }
@@ -271,12 +279,11 @@ export default {
     startRecord () {
       this.recorded = false
       const wx = window.wx
-      console.log(this.recordTime)
       wx.startRecord()
       setTimeout(() => {
         this.firstRecord = false
         this.stopRecord()
-      }, parseInt(this.recordTime))
+      }, this.recordTime * 1000)
     },
     tryListen () {
       this.status = true
