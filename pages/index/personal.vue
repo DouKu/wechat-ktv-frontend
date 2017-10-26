@@ -99,6 +99,7 @@ export default {
       audioIndex: 1,
       showTip: false,
       progressNum: 0,
+      showTipTime: 0,
       rank: [],
       preLyric: '',
       chorusId: '',
@@ -115,7 +116,6 @@ export default {
       lyrics: [],
       musicName: '',
       interval: 0,
-      userNum: 1,
       timeout: 0,
       recordTime: 0
     }
@@ -188,10 +188,6 @@ export default {
         this.lyrics = [...res.data.data.lyric, '...', 'END']
         this.times = res.data.data.secondes
         this.parLen = res.data.data.parLen
-        for (let i = 0; i < this.userNum + 1; i++) {
-          this.timeout = this.timeout + parseInt(this.parLen[i])
-        }
-        console.log(this.timeout)
       } else {
         window.location.href = `${config.redirectUrl}/rule`
       }
@@ -205,8 +201,19 @@ export default {
         this.currentMusic = res.data.data.audio
         this.finalUrl = res.data.data.recordUrl
       }
+      for (let i = 0; i < this.progressNum + 2; i++) {
+        this.timeout = this.timeout + parseInt(this.parLen[i])
+      }
+      console.log(this.timeout)
       console.log(this.progressNum, 'progressNum')
       this.recordTime = this.parLen[this.progressNum + 1]
+      let tempTime = 0
+      for (let i = 0; i < this.progressNum + 1; i++) {
+        tempTime = tempTime + parseInt(this.parLen[i])
+      }
+      console.log(tempTime)
+      this.showTipTime = tempTime
+      console.log(this.showTipTime, 'showTipTime')
       console.log(this.recordTime, 'recordTime')
       const rankRes = await axios.request({
         url: `${config.baseUrl}/api/auth/chorus/rank`,
@@ -219,7 +226,7 @@ export default {
         this.preLyric = this.curLyric
         ++this.second
         console.log(this.second)
-        if (this.second === (this.timeout - this.recordTime - 2)) {
+        if (this.second === (this.showTipTime - 2)) {
           this.toastText = '接下来要轮到你录制啦'
           this.showToast = true
           setTimeout(() => {
