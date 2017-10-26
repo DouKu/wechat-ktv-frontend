@@ -162,6 +162,9 @@ export default {
           this.toJoinFlag = false
         }
       })
+      if (len < 1) {
+        this.toJoinFlag = false
+      }
       this.chorus.users.forEach((item, index) => {
         if (item.user.openid === this.shareOpenId) {
           this.userScore = item.extendMessage.point
