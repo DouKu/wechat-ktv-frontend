@@ -276,7 +276,7 @@ export default {
       setTimeout(() => {
         this.firstRecord = false
         this.stopRecord()
-      }, this.recordTime)
+      }, parseInt(this.recordTime))
     },
     tryListen () {
       this.status = true
