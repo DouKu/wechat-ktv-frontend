@@ -187,7 +187,7 @@ export default {
         }
       })
       const chorus = _res.data.data
-      if (chorus._id && !this.chorusId) {
+      if (chorus._id && !this.$route.query.chorusId) {
         window.location.href = `${config.redirectUrl}/share?chorusId=${chorus._id}&openid=${window.localStorage.getItem('openid')}`
         return
       }
