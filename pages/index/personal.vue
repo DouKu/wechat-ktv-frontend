@@ -204,10 +204,10 @@ export default {
         this.progressNum = res.data.data.users.length
         this.currentMusic = res.data.data.audio
         this.finalUrl = res.data.data.recordUrl
-        console.log(this.progressNum, 'progressNum')
-        this.recordTime = this.parLen[this.progressNum + 1]
-        console.log(this.recordTime, 'recordTime')
       }
+      console.log(this.progressNum, 'progressNum')
+      this.recordTime = this.parLen[this.progressNum + 1]
+      console.log(this.recordTime, 'recordTime')
       const rankRes = await axios.request({
         url: `${config.baseUrl}/api/auth/chorus/rank`,
         method: 'get'
@@ -259,7 +259,6 @@ export default {
       this.interval = setInterval(() => {
         this.preLyric = this.curLyric
         ++this.second
-        console.log(this.second)
         if (this.second === this.timeout) {
           clearInterval(this.interval)
         }
@@ -302,7 +301,7 @@ export default {
       const wx = window.wx
       wx.stopRecord({
         success: res => {
-          this.toastText = '录制成功, 您可以点击播放进行试听'
+          this.toastText = '录制成功'
           this.showToast = true
           setTimeout(() => {
             this.showToast = false
