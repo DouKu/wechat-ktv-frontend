@@ -1,5 +1,7 @@
 <template>
-  <div class="c-toast" v-show="show">{{text}}</div>
+  <div class="c-toast" v-show="show">
+    <div>{{text}}</div>
+  </div>
 </template>
 
 <script>
@@ -20,9 +22,13 @@ export default {
   text-align: center;
   line-height: 60px;
   margin: auto;
-  width: 200px;
+  width: 100%;
   height: 60px;
   font-size: 26px;
+}
+.c-toast > div {
+  padding: 10px;
+  display: inline;
   background: rgba(0, 0, 0, 0.5);
   color: #ffffff;
 }

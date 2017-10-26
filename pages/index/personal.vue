@@ -224,7 +224,7 @@ export default {
           this.showToast = true
           setTimeout(() => {
             this.showToast = false
-          }, this.recordTime * 1000)
+          }, 1500)
         }
         if (this.second === this.timeout) {
           clearInterval(this.interval)
@@ -260,12 +260,12 @@ export default {
         this.preLyric = this.curLyric
         ++this.second
         console.log(this.second)
-        if (this.second === (this.timeout - this.recordTime - 2)) {
+        if (this.second === (this.timeout - this.recordTime - 3)) {
           this.toastText = '接下来要轮到你录制啦'
           this.showToast = true
           setTimeout(() => {
             this.showToast = false
-          }, this.recordTime * 1000)
+          }, 1500)
         }
         if (this.second === this.timeout) {
           clearInterval(this.interval)
@@ -309,7 +309,7 @@ export default {
       const wx = window.wx
       wx.stopRecord({
         success: res => {
-          this.toastText = '录制成功'
+          this.toastText = '录制成功,点击播放可以进行试听'
           this.showToast = true
           setTimeout(() => {
             this.showToast = false
@@ -529,9 +529,11 @@ export default {
 }
 .w-lryic-container h2 {
   font-size: 32px;
+  margin: 10px 0;
 }
 .w-lryic-container h3 {
   color: #ccc;
+  margin: 8px 0;
   font-size: 28px;
 }
 .w-lryic-container .w-current-lryic {
