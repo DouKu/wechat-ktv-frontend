@@ -20,16 +20,17 @@ export default {
   left: 0;
   right: 0;
   text-align: center;
-  line-height: 60px;
+  line-height: 70px;
   margin: auto;
   width: 100%;
-  height: 60px;
-  font-size: 26px;
+  height: 70px;
+  font-size: 30px;
 }
 .c-toast > div {
-  padding: 10px;
+  padding: 18px;
   display: inline;
-  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.9);
   color: #ffffff;
 }
 </style>

@@ -108,7 +108,7 @@ export default {
       finalUrl: '',
       recorded: false,
       toastText: '请先录制歌曲',
-      showToast: false,
+      showToast: true,
       second: 0,
       index: 0,
       times: [0, 5, 7, 10, 12, 15],
@@ -277,6 +277,7 @@ export default {
       this.startPreVoice()
     },
     startRecord () {
+      this.localId = null
       this.recorded = false
       const wx = window.wx
       wx.startRecord()
@@ -532,12 +533,12 @@ export default {
   margin: 10px 0;
 }
 .w-lryic-container h3 {
-  color: #ccc;
+  color: #ffffff;
   margin: 8px 0;
   font-size: 28px;
 }
 .w-lryic-container .w-current-lryic {
-  color: #06c6aa;
+  color: purple;
 }
 
 .w-btn-container {
