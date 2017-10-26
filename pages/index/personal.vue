@@ -108,7 +108,7 @@ export default {
       finalUrl: '',
       recorded: false,
       toastText: '请先录制歌曲',
-      showToast: true,
+      showToast: false,
       second: 0,
       index: 0,
       times: [0, 5, 7, 10, 12, 15],
