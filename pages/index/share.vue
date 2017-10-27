@@ -495,7 +495,7 @@ export default {
 .w-continue-btn, .w-share-btn {
   width: 360px;
   height: 100px;
-  font-size: 35px;
+  font-size: 30px;
   line-height: 120px;
   text-align: center;
   color: #ffb5ff;
@@ -503,9 +503,6 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   text-shadow: -5px 0 20px #ad47b2, 0 0 20px #ad47b2, 5px 0 20px #ad47b2, 0 5.5px 20px #ad47b2;
-}
-.w-share-btn {
-  font-size: 30px;
 }
 
 .w-continue-btn:active, .w-share-btn:active {
