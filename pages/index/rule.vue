@@ -39,6 +39,18 @@ const dev = config.dev
 export default {
   methods: {
     async init () {
+      const _res = await axios.request({
+        url: `${config.baseUrl}/api/auth/chorus`,
+        method: 'get',
+        params: {
+          openid: localStorage.getItem('openid')
+        }
+      })
+      const chorus = _res.data.data
+      if (chorus._id && !this.$route.query.chorusId) {
+        window.location.href = `${config.redirectUrl}/share?chorusId=${chorus._id}&openid=${window.localStorage.getItem('openid')}`
+        return
+      }
       const res = await axios.request({
         url: `${config.baseUrl}/api/auth/audio`,
         method: 'get'
