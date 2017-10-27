@@ -387,8 +387,15 @@ export default {
                 openid: localStorage.getItem('openid')
               }
             })
-            this.showToast = false
-            window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}&openid=${window.localStorage.getItem('openid')}`
+            if (_res.data.data.code === 400) {
+              this.toastText = '您已经参加过录制，无需再次录制'
+              setTimeout(() => {
+                this.showToast = false
+              }, 1000)
+            } else {
+              this.showToast = false
+              window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}&openid=${window.localStorage.getItem('openid')}`
+            }
           } else {
             const _res = await axios.request({
               url: `${config.baseUrl}/api/auth/chorus/${this.chorusId}`,
@@ -400,8 +407,15 @@ export default {
                 openid: localStorage.getItem('openid')
               }
             })
-            this.showToast = false
-            window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}&openid=${window.localStorage.getItem('openid')}`
+            if (_res.data.data.code === 400) {
+              this.toastText = '您已经参加过录制，无需再次录制'
+              setTimeout(() => {
+                this.showToast = false
+              }, 1000)
+            } else {
+              this.showToast = false
+              window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}&openid=${window.localStorage.getItem('openid')}`
+            }
           }
         }
       })
