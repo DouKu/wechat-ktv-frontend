@@ -348,6 +348,8 @@ export default {
         }, 1000)
         return
       }
+      this.toastText = '音频分析上传中，请耐心等待'
+      this.showToast = true
       this.translateVoice()
     },
     pauseVoice () {
@@ -385,6 +387,7 @@ export default {
                 openid: localStorage.getItem('openid')
               }
             })
+            this.showToast = false
             window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}&openid=${window.localStorage.getItem('openid')}`
           } else {
             const _res = await axios.request({
@@ -397,6 +400,7 @@ export default {
                 openid: localStorage.getItem('openid')
               }
             })
+            this.showToast = false
             window.location.href = `${config.redirectUrl}/share?chorusId=${_res.data.data.chorusId}&openid=${window.localStorage.getItem('openid')}`
           }
         }
