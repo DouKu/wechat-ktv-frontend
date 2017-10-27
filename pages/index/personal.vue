@@ -330,6 +330,7 @@ export default {
       })
     },
     translateVoice () {
+      const wx = window.wx
       wx.translateVoice({
         localId: this.localId, // 需要识别的音频的本地Id，由录音相关接口获得
         isShowProgressTips: 0,
@@ -347,7 +348,7 @@ export default {
         }, 1000)
         return
       }
-      this.translateVoice ()
+      this.translateVoice()
     },
     pauseVoice () {
       const wx = window.wx
