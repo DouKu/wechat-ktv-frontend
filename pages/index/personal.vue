@@ -40,7 +40,7 @@
       <div class="w-score-title">排行榜</div>
       <div class="w-score-items">
         <div class="w-score-item" v-for="(item, index) in rank" :key="index">
-          <span class="w-rank-order">{{index+1}}.</span><span class="w-rank-username">{{item.users[0].user.nickname+"dfdfasdf"}}</span> ......... <span class="w-rank-score">{{item.totalScore}}分</span> ......... {{item.updateAt | dateFormat }}
+          <span class="w-rank-order">{{index+1}}.</span><span class="w-rank-username">{{item.users[0].user.nickname}}</span> ......... <span class="w-rank-score">{{item.totalScore}}分</span> ......... {{item.updateAt | dateFormat }}
         </div>
       </div>
     </div>
@@ -96,6 +96,7 @@ export default {
   },
   data () {
     return {
+      recordText: '',
       audioIndex: 1,
       showTip: false,
       progressNum: 0,
@@ -328,6 +329,16 @@ export default {
         }
       })
     },
+    translateVoice () {
+      wx.translateVoice({
+        localId: this.localId, // 需要识别的音频的本地Id，由录音相关接口获得
+        isShowProgressTips: 0,
+        success: res => {
+          this.recordText = res.translateResult // 语音识别的结果
+          this.uploadVoice()
+        }
+      })
+    },
     toFinish () {
       if (!this.localId) {
         this.showToast = true
@@ -336,7 +347,7 @@ export default {
         }, 1000)
         return
       }
-      this.uploadVoice()
+      this.translateVoice ()
     },
     pauseVoice () {
       const wx = window.wx
@@ -368,6 +379,7 @@ export default {
               method: 'post',
               data: {
                 mediaId: serverId,
+                recordText: this.recordText,
                 audioId: this.currentMusic._id,
                 openid: localStorage.getItem('openid')
               }
@@ -379,6 +391,7 @@ export default {
               method: 'patch',
               data: {
                 mediaId: serverId,
+                recordText: this.recordText,
                 audioId: this.currentMusic._id,
                 openid: localStorage.getItem('openid')
               }

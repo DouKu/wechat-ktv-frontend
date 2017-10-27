@@ -4,7 +4,7 @@ export default {
   baseUrl: 'http://znq.gzmylike.com:443',
   recordId: '13213',
   chorusId: '',
-  dev: false,
+  dev: true,
   auth: false,
   title: '与明星信飙高音，还有丰厚礼品相送！',
   desc: '听说还有机会与大明星面对面！还不快参加',
