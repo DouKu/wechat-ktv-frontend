@@ -3,6 +3,7 @@
     <div class="w-popup-container">
       <h1>点击右上角 “···”</h1>
       <h2>发送给好友或分享到朋友圈</h2>
+      <h3>关注广州美莱公众号领取周年庆优惠大礼包</h3>
     </div>
     <div class="w-to-share"></div>
   </div>
@@ -65,6 +66,10 @@ export default {
 .w-popup-container > h2 {
   margin: 0;
   font-size: 40px;
+}
+.w-popup-container > h3 {
+  margin: 8px;
+  font-size: 32px;
 }
 .w-to-share {
   position: absolute;

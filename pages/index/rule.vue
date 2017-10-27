@@ -6,7 +6,7 @@
       <p class="w-rule-item w-rule-two" style="margin-bottom: 0px;">团队分数排名最高前49名可获得周年庆盛典丰厚礼品，中奖名单在广州美莱公众号(微信号:dgmylike)公布。</p>
       <p class="w-rule-item-deep"><span>特等奖：</span>30日周年庆盛典入场名额2名，与信面对面(前2名)</p>
       <p class="w-rule-item-deep"><span>一等奖：</span>爱马仕香水50ml 2名（第3-4名）</p>
-      <p class="w-rule-item-deep"><span>二等奖：</span>兰芝护唇膏 5名（第5-9名）</p>
+      <p class="w-rule-item-deep"><span>二等奖：</span>DHC护唇膏5名（第5-9名）</p>
       <p class="w-rule-item-deep"><span>三等奖：</span>玻尿酸润白导入体验券 10名（第10-19名）</p>
       <p class="w-rule-item-deep"><span>四等奖：</span>专业护理妮斯面膜 10名（第20-29名）</p>
       <p class="w-rule-item-deep"><span>五等奖：</span>专业护理手膜 20名（第30-49名）</p>
@@ -105,37 +105,26 @@ export default {
       wx.config(wechat.data.data)
       wx.ready(() => {
         wx.onMenuShareTimeline({
-          title: '美莱周年庆', // 分享标题
-          link: `${config.redirectUrl}?type=share`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: 'http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg', // 分享图标
+          title: config.title,
+          desc: config.desc,
+          link: config.link,
+          imgUrl: config.imgUrl,
           success: () => {
-            console.log(config.recordId, '分享ID')
-            console.log('分享成功')
-            // 用户确认分享后执行的回调函数
           },
           cancel: () => {
-            console.log('分享失败')
-            // 用户取消分享后执行的回调函数
           }
         })
         wx.onMenuShareAppMessage({
-          title: '美莱周年庆', // 分享标题
-          desc: '唱歌', // 分享描述
-          link: `${config.redirectUrl}?type=share`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: 'http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg', // 分享图标
-          // type: '', // 分享类型,music、video或link，不填默认为link
-          // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+          title: config.title,
+          desc: config.desc,
+          link: config.link,
+          imgUrl: config.imgUrl,
           success: () => {
-            console.log('分享成功')
-            // 用户确认分享后执行的回调函数
           },
           cancel: () => {
-            console.log('分享失败')
-            // 用户取消分享后执行的回调函数
           }
         })
         config.auth = true
-        console.log('config success')// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
       })
       wx.error(function (res) {
         // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。

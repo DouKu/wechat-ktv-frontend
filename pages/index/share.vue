@@ -33,7 +33,7 @@
     </div>
     <div class="w-btn-container">
       <div v-show="toJoinFlag" class="w-continue-btn" @click="toJoin">参加歌唱<img src="~assets/images/play.png"></img></div>
-      <div class="w-share-btn" @click="toShareFriend">好歌要分享<img src="~assets/images/play.png"></img></div>
+      <div class="w-share-btn" @click="toShareFriend">邀请好友帮帮唱<img src="~assets/images/play.png"></img></div>
     </div>
     <img src="~assets/images/share/code.png" class="w-star-code"></img>
     <share-model v-model="showModel"></share-model>
@@ -77,41 +77,28 @@ export default {
       wx.config(res.data.data)
       wx.ready(() => {
         wx.onMenuShareTimeline({
-          title: `广州美莱周年庆`, // 分享标题
-          desc: `我在广州美莱周年庆ktv中获得${this.chorus.totalScore}分`, // 分享描述
-          link: `${config.redirectUrl}/share?chorusId=${this.$route.query.chorusId}&openid=${this.$route.query.openid || window.localStorage.getItem('openid')}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: 'http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg', // 分享图标
+          title: config.title,
+          desc: config.inviteDesc(this.chorus.totalScore),
+          link: config.inviteLink(this.$route.query.chorusId, this.$route.query.openid || window.localStorage.getItem('openid')),
+          imgUrl: config.imgUrl,
           success: () => {
-            console.log(config.recordId, '分享ID')
-            console.log('分享成功')
-            // 用户确认分享后执行的回调函数
           },
           cancel: () => {
-            console.log('分享失败')
-            // 用户取消分享后执行的回调函数
           }
         })
         wx.onMenuShareAppMessage({
-          title: `广州美莱周年庆`, // 分享标题
-          desc: `我在广州美莱周年庆ktv中获得${this.chorus.totalScore}分`, // 分享描述
-          link: `${config.redirectUrl}/share?chorusId=${this.$route.query.chorusId}&openid=${this.$route.query.openid || window.localStorage.getItem('openid')}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: 'http://os32fgzvj.bkt.clouddn.com/012489fbdca023b5de1f5ddb41e15f61-head-picture.jpg', // 分享图标
-          // type: '', // 分享类型,music、video或link，不填默认为link
-          // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+          title: config.title,
+          desc: config.inviteDesc(this.chorus.totalScore),
+          link: config.inviteLink(this.$route.query.chorusId, this.$route.query.openid || window.localStorage.getItem('openid')),
+          imgUrl: config.imgUrl,
           success: () => {
-            console.log('分享成功')
-            // 用户确认分享后执行的回调函数
           },
           cancel: () => {
-            console.log('分享失败')
-            // 用户取消分享后执行的回调函数
           }
         })
         config.auth = true
-        console.log('config success')// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
       })
       wx.error(function (res) {
-        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
         console.log('wx jsapi err:', res)
       })
     }
@@ -497,7 +484,7 @@ export default {
 
 .w-btn-container {
   position: relative;
-  top: 90px;
+  top: 120px;
   flex-direction: column;
   height: 150px;
   display: flex;
@@ -517,6 +504,9 @@ export default {
   background-size: cover;
   text-shadow: -5px 0 20px #ad47b2, 0 0 20px #ad47b2, 5px 0 20px #ad47b2, 0 5.5px 20px #ad47b2;
 }
+.w-share-btn {
+  font-size: 30px;
+}
 
 .w-continue-btn:active, .w-share-btn:active {
   transform: scale(1.2);
@@ -530,7 +520,7 @@ export default {
 
 .w-star-code {
   position: relative;
-  top: 120px;
+  top: 140px;
   width: 700px;
   height: 350px;
 }
