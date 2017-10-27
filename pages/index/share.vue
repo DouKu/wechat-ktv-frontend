@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="w-btn-container">
-      <div v-show="toJoinFlag" class="w-continue-btn" @click="toJoin">参加歌唱<img src="~assets/images/play.png"></img></div>
+      <div v-show="toJoinFlag" class="w-continue-btn" @click="toJoin">为TA接着唱<img src="~assets/images/play.png"></img></div>
       <div class="w-share-btn" @click="toShareFriend">邀请好友帮帮唱<img src="~assets/images/play.png"></img></div>
     </div>
     <img src="~assets/images/share/code.png" class="w-star-code"></img>
