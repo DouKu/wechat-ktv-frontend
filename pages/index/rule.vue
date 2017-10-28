@@ -6,8 +6,8 @@
       <p class="w-rule-item w-rule-two" style="margin-bottom: 0px;">团队分数排名最高前49名可获得周年庆盛典丰厚礼品，中奖名单在广州美莱公众号(微信号:dgmylike)公布。</p>
       <p class="w-rule-item-deep"><span>特等奖：</span>30日周年庆盛典入场名额2名，与信面对面(前2名)</p>
       <p class="w-rule-item-deep"><span>一等奖：</span>爱马仕香水50ml 2名（第3-4名）</p>
-      <p class="w-rule-item-deep"><span>二等奖：</span>DHC护唇膏5名（第5-9名）</p>
-      <p class="w-rule-item-deep"><span>三等奖：</span>玻尿酸润白导入体验券 10名（第10-19名）</p>
+      <p class="w-rule-item-deep"><span>二等奖：</span>玻尿酸润白导入体验券 10名（第5-14名）</p>
+      <p class="w-rule-item-deep"><span>三等奖：</span>DHC护唇膏 5名（第15-19名）</p>
       <p class="w-rule-item-deep"><span>四等奖：</span>专业护理妮斯面膜 10名（第20-29名）</p>
       <p class="w-rule-item-deep"><span>五等奖：</span>专业护理手膜 20名（第30-49名）</p>
       <p class="w-rule-item w-rule-three">用户在获奖名单公布后，凭姓名和手机号码到本院1楼前台领取，领取时间截止至2017年11月30日12:00，逾期不候。</p>
