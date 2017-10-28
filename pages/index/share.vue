@@ -524,7 +524,7 @@ export default {
 
 .w-star-code {
   position: relative;
-  top: 190px;
+  top: 210px;
   width: 700px;
   height: 350px;
 }
