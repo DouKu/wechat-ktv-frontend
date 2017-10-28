@@ -491,7 +491,7 @@ export default {
 
 .w-btn-container {
   position: relative;
-  top: 120px;
+  top: 150px;
   flex-direction: column;
   height: 150px;
   display: flex;
@@ -524,7 +524,7 @@ export default {
 
 .w-star-code {
   position: relative;
-  top: 140px;
+  top: 170px;
   width: 700px;
   height: 350px;
 }
