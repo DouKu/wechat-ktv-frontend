@@ -77,19 +77,21 @@ export default {
   overflow: auto;
 }
 .w-show-img {
+  position: relative;
+  top: 15px;
   box-sizing: border-box;
-  margin: 15px 15px 0 15px;
   width: 100%;
   height: 1050px;
 }
 .w-start-btn {
+  position: relative;
+  top: -20px;
   width: 360px;
   height: 100px;
   font-size: 35px;
   line-height: 120px;
   text-align: center;
   color: #ffb5ff;
-  margin-bottom: 25px;
   background-image: url("~assets/images/pink-btn.png");
   background-repeat: no-repeat;
   background-size: cover;

@@ -348,8 +348,8 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
+  width: 90px;
+  height: 90px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
