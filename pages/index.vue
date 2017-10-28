@@ -46,7 +46,15 @@ export default {
           })
           window.localStorage.setItem('openid', res.data.data.openid)
           const redirect = window.localStorage.getItem('redirect') || 'cover'
-          window.location.href = `${config.redirectUrl}/${redirect}`
+          const chorusId = window.localStorage.getItem('chorusId')
+          const shareopenid = window.localStorage.getItem('shareopenid')
+          if (chorusId) {
+            window.localStorage.setItem('chorusId', '')
+            window.localStorage.setItem('shareopenid', '')
+            window.location.href = `${config.redirectUrl}/share?chorusId=${chorusId}&openid=${shareopenid}`
+          } else {
+            window.location.href = `${config.redirectUrl}/${redirect}`
+          }
         } catch (error) {
         }
       } else {

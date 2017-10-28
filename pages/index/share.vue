@@ -34,7 +34,7 @@
     <div class="w-btn-container">
       <div v-show="toJoinFlag" class="w-continue-btn" @click="toJoin">为TA接着唱<img src="~assets/images/play.png"></img></div>
       <div class="w-share-btn" @click="toShareFriend">邀请好友帮帮唱<img src="~assets/images/play.png"></img></div>
-      <div v-show="toPlayFlag" class="w-share-btn" @click="toPlay">我也要玩<img src="~assets/images/play.png"></img></div>
+      <div v-show="toPlayFlag" class="w-share-btn" @click="gotoPlay">我也要玩<img src="~assets/images/play.png"></img></div>
     </div>
     <img src="~assets/images/share/code.png" class="w-star-code"></img>
     <share-model v-model="showModel"></share-model>
@@ -108,6 +108,8 @@ export default {
     async init () {
       const openid = window.localStorage.getItem('openid')
       if (!openid && !dev) {
+        localStorage.setItem('chorusId', this.$route.query.chorusId)
+        localStorage.setItem('shareopenid', this.$route.query.openid)
         window.location.href = `${config.redirectUrl}?redirect=share`
         return
       }
@@ -197,7 +199,7 @@ export default {
     toJoin () {
       window.location.href = `${config.redirectUrl}/personal?chorusId=${this.chorusId}&musicId=${this.chorus.audio._id}`
     },
-    toPlay () {
+    gotoPlay () {
       window.location.href = `${config.redirectUrl}/cover`
     },
     preAudioEnd () {
