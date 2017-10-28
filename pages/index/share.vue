@@ -159,11 +159,13 @@ export default {
           this.userScore = item.extendMessage.point
         }
       })
+      if (openid === this.chorus.users[0].user.openid) {
+        this.toPlayFlag = false
+      }
       if (openid === this.shareOpenId) {
         this.self = true
       } else if (openid === this.chorus.users[0].user.openid) {
         this.self = true
-        this.toPlayFlag = false
         this.userScore = this.chorus.users[0].extendMessage.point
       } else {
         this.self = false
