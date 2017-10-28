@@ -108,7 +108,7 @@ export default {
       currentMusic: {},
       localId: '',
       finalUrl: '',
-      recorded: true,
+      recorded: false,
       toastText: '请先录制歌曲',
       showToast: false,
       second: 0,
